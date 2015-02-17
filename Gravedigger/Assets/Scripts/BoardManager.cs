@@ -81,12 +81,16 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	Vector3 RandomPosition() {
-		int randomIndex = Random.Range (0, gridPositions.Count);
+		Vector3 randomPosition;
+		do {
+			int randomIndex = Random.Range (0, gridPositions.Count);
+			randomPosition = gridPositions [randomIndex];
+			randomPosition.y = 1;
 
-		Vector3 randomPosition = gridPositions [randomIndex];
-
-		gridPositions.RemoveAt (randomIndex);
-
+		} while (!gridPositions.Contains(randomPosition));
+				
+		gridPositions.Remove (randomPosition);
+		
 		return randomPosition;
 	}
 
