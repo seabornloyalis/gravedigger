@@ -16,6 +16,11 @@ public class Enemy : MovingObject {
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		base.Start ();
 	}
+
+	private void OnDisable()
+	{
+		GameManager.instance.RemoveEnemyFromList(this);
+	}
 	
 	public void DamageEnemy(int loss)
 	{

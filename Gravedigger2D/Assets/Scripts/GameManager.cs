@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour {
 		enemies.Add (script);
 	}
 
+	public void RemoveEnemyFromList(Enemy script)
+	{
+		enemies.Remove (script);
+	}
+
 	public void AddBodyToList(Body script) {
 		bodies.Add (script);
 	}
