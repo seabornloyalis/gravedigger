@@ -5,6 +5,7 @@ public class Enemy : MovingObject {
 
 	public int health = 2;
 	public int playerDamage = 1;
+	public GameObject body;
 
 	private Transform target;
 	private bool skipMove;
@@ -21,6 +22,7 @@ public class Enemy : MovingObject {
 		health -= loss;
 		if (health <= 0) {
 			gameObject.SetActive(false);
+			Instantiate(body, transform.position, Quaternion.identity);
 		}
 	}
 

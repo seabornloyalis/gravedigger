@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 
 	private int level = 1;
 	private List<Enemy> enemies;
+	private List<Body> bodies;
 	private bool enemiesMoving;
 
 	void Awake()
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour {
 
 		DontDestroyOnLoad (gameObject);
 		enemies = new List<Enemy> ();
+		bodies = new List<Body> ();
 		boardScript = GetComponent<BoardManager> ();
 		InitGame ();
 	
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour {
 	void InitGame()
 	{
 		enemies.Clear ();
+		bodies.Clear ();
 		boardScript.SetupScene(level);
 	}
 
@@ -46,11 +49,11 @@ public class GameManager : MonoBehaviour {
 	void Update()
 	{
 		if (playersTurn) {
-			Debug.Log ("Still player Turn\n");
+			//Debug.Log ("Still player Turn\n");
 		}
 		if (enemiesMoving) {
-			Debug.Log ("Enemies Moving\n"); 
-			Debug.Log("There are " + enemies.Count + " enemies\n");
+			//Debug.Log ("Enemies Moving\n"); 
+			//Debug.Log("There are " + enemies.Count + " enemies\n");
 		}
 		if (playersTurn || enemiesMoving) 
 		{
@@ -63,6 +66,10 @@ public class GameManager : MonoBehaviour {
 	public void AddEnemyToList(Enemy script)
 	{
 		enemies.Add (script);
+	}
+
+	public void AddBodyToList(Body script) {
+		bodies.Add (script);
 	}
 
 	IEnumerator MoveEnemies()
@@ -79,7 +86,9 @@ public class GameManager : MonoBehaviour {
 			enemies[i].MoveEnemy();
 			yield return new WaitForSeconds(enemies[i].moveTime);
 		}
-
+		for (int i = 0; i < bodies.Count; i++) {
+			bodies[i].reduceDormancy();
+		}
 		playersTurn = true;
 		enemiesMoving = false;
 	}
