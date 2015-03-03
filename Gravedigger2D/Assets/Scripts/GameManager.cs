@@ -71,7 +71,17 @@ public class GameManager : MonoBehaviour {
 	public void RemoveEnemyFromList(Enemy script)
 	{
 		enemies.Remove (script);
+		CheckIfNextLevel ();
 	}
+
+	void CheckIfNextLevel()
+	{
+		if (enemies.Count == 0)
+		{
+			//do the thing
+		}
+	}
+	
 
 	public void AddBodyToList(Body script) {
 		bodies.Add (script);
