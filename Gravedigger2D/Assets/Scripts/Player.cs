@@ -9,14 +9,17 @@ public class Player : MovingObject {
 	public float playerTurnDelay = 0.2f;
 
 	public int health;
-	public string isCarrying;
 	public GameObject hole;
+
+	private string isCarrying;
+	private Vector2 lookDir;
 
 	// Use this for initialization
 	protected override void Start ()
 	{
 		health = GameManager.instance.playerHealth;
 		isCarrying = "None";
+		lookDir = new Vector2 (1.0f, 0.0f);
 		base.Start ();
 	}
 
@@ -35,28 +38,20 @@ public class Player : MovingObject {
 
 		int horizontal = 0;
 		int vertical = 0;
-		int interactHoriz = 0;
-		int interactVert = 0;
 
 		horizontal = (int)Input.GetAxisRaw ("Horizontal");
 		vertical = (int)Input.GetAxisRaw ("Vertical");
 
-		interactHoriz = (int)Input.GetAxisRaw ("Fire1");
-		interactVert = (int)Input.GetAxisRaw ("Fire2");
-
 		if (horizontal != 0)
 		{
 			vertical = 0;
-		}
-		if (interactHoriz != 0) {
-			interactVert = 0;
-		}
-		
-		if (horizontal != 0 || vertical != 0) {
+		} 
+		if ((horizontal != 0 || vertical != 0) && Input.GetAxisRaw ("Rotate") == 1) {
+			RotateFacing(new Vector2(horizontal, vertical));
+		} else if (horizontal != 0 || vertical != 0) {
 			AttemptMove<Enemy> (horizontal, vertical);
-
-		} else if (interactHoriz != 0 || interactVert != 0) {
-			Interact<Player>(interactHoriz, interactVert);
+		} else  {
+			Interact<Player>();
 		}
 	}
 
@@ -64,8 +59,7 @@ public class Player : MovingObject {
 	{
 		base.AttemptMove<T> (xDir, yDir);
 
-		RaycastHit2D hit;
-
+		RotateFacing (new Vector2(xDir, yDir));
 
 		GameManager.instance.playersTurn = false;
 	}
@@ -94,37 +88,45 @@ public class Player : MovingObject {
 		}
 	}
 
-	private void Interact<T>(int xDir, int yDir)
+	private void Interact<T>()
 		where T : Component //Needed?
 	{
 		RaycastHit2D hit;
 		Vector2 start = transform.position;
-		Vector2 end = start + new Vector2 (xDir, yDir);
-		bool canDig = InteractWithGround (end, out hit);
+		Vector2 end = start + lookDir;
+		bool noObstacle = InteractWithGround (end, out hit);
+		bool acted = false;
 
-		if(canDig && hit.transform == null)
+
+		if(noObstacle && hit.transform == null && (Input.GetAxisRaw("Dig") != 0.0f))
 		{
 			Dig(end);
-		}
-		
+			acted = true;
+			GameManager.instance.playersTurn = false;
+		} 
 		if(hit.transform == null)
 		{
-			Debug.Log("null hit");
-			GameManager.instance.playersTurn = false;
+			//Debug.Log("null hit");
+			//GameManager.instance.playersTurn = false;
 			return;
 		}
 
 		//T hitComponent = hit.transform.GetComponent<T>();	
-		Debug.Log (isCarrying);
-		Debug.Log (hit.transform.tag);
-		if (hit.transform.tag == "Body" && isCarrying == "None") {
+		//Debug.Log (isCarrying);
+		//Debug.Log (hit.transform.tag);
+
+		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw("Pick/put") != 0.0f)) {
 			isCarrying = "Body";
 			hit.transform.gameObject.SetActive(false);
-		} else if (hit.transform.tag == "Hole" && isCarrying == "Body") {
+			acted = true;
+		} else if (hit.transform.tag == "Hole" && isCarrying == "Body" && (Input.GetAxisRaw("Pick/put") != 0.0f)) {
 			isCarrying = "None";
 			hit.transform.gameObject.SetActive(false);
+			acted = true;
 		}
-		GameManager.instance.playersTurn = false;
+		if (acted) {
+			GameManager.instance.playersTurn = false;
+		}
 	}
 
 	private bool InteractWithGround(Vector2 end, out RaycastHit2D hit)
@@ -145,5 +147,21 @@ public class Player : MovingObject {
 
 	private void Dig (Vector2 digLoc) {
 		Instantiate(hole, new Vector3(digLoc.x, digLoc.y, 0f), Quaternion.identity);
+	}
+
+	private void RotateFacing (Vector2 newFacing) {
+		lookDir = newFacing;
+
+		while (transform.rotation.z > 0.0f) {
+			transform.Rotate (0.0f, 0.0f, -90.0f);
+		}
+		if (lookDir.y == 1.0f)
+			transform.Rotate (0.0f, 0.0f, 90.0f);
+		else if (lookDir.x == -1.0f) {
+			transform.Rotate (0.0f, 0.0f, 90.0f);
+			transform.Rotate(0.0f, 0.0f, 90.0f);
+		}else if (lookDir.y == -1.0f)
+			transform.Rotate(0.0f, 0.0f, 270.0f);
+
 	}
 }
