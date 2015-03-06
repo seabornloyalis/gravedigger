@@ -17,6 +17,12 @@ public class Body : MonoBehaviour {
 		}
 	}
 
+	void OnDisable()
+	{
+		GameManager.instance.RemoveBodyFromList (this);
+	}
+
+
 	public void reduceDormancy() {
 		turnsDormant--;
 	}

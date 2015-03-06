@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MovingObject {
 
@@ -7,8 +8,14 @@ public class Player : MovingObject {
 	public int digPower = 1;
 	public float restartLevelDelay = 1f;
 	public float playerTurnDelay = 0.2f;
+	public Text scoreText;
+	public Text healthText;
+	public Text carryText;
+	public Text countText;
 
 	public int health;
+	public int score;
+	public int count = 150;
 	public GameObject hole;
 
 	private string isCarrying;
@@ -18,7 +25,13 @@ public class Player : MovingObject {
 	protected override void Start ()
 	{
 		health = GameManager.instance.playerHealth;
+		health++; //added because its hard to get further without healing
+		score = GameManager.instance.playerScore;
 		isCarrying = "None";
+		carryText.text = "";
+		healthText.text = "Health: " + health;
+		scoreText.text = "Score: " + score;
+		countText.text = "Turns Left: " + count;
 		lookDir = new Vector2 (1.0f, 0.0f);
 		base.Start ();
 	}
@@ -26,6 +39,8 @@ public class Player : MovingObject {
 	private void OnDisable()
 	{
 		GameManager.instance.playerHealth = health;
+		score += count;
+		GameManager.instance.playerScore = score;
 	}
 	
 	// Update is called once per frame
@@ -60,7 +75,9 @@ public class Player : MovingObject {
 		base.AttemptMove<T> (xDir, yDir);
 
 		RotateFacing (new Vector2(xDir, yDir));
-
+		count--;
+		countText.text = "Turns Left: " + count;
+		CheckIfGameOver ();
 		GameManager.instance.playersTurn = false;
 	}
 
@@ -78,13 +95,22 @@ public class Player : MovingObject {
 	public void LoseHealth(int loss)
 	{
 		health -= loss;
+		healthText.text = "Health: " + health;
 		CheckIfGameOver ();
 	}
 
 	private void CheckIfGameOver()
 	{
-		if (health <= 0) {
+		if (health <= 0 || count <= 0) {
 	 		GameManager.instance.Gameover ();
+		}
+	}
+
+	private void CheckIfNextLevel()
+	{
+		if (GameManager.instance.numEnemies == 0 
+		    && GameManager.instance.numBodies == 0) {
+			Invoke("Restart", restartLevelDelay);
 		}
 	}
 
@@ -102,6 +128,9 @@ public class Player : MovingObject {
 		{
 			Dig(end);
 			acted = true;
+			count--;
+			countText.text = "Turns Left: " + count;
+			CheckIfGameOver();
 			GameManager.instance.playersTurn = false;
 		} 
 		if(hit.transform == null)
@@ -117,10 +146,21 @@ public class Player : MovingObject {
 
 		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw("Pick/put") != 0.0f)) {
 			isCarrying = "Body";
+			carryText.text = "You have a body";
 			hit.transform.gameObject.SetActive(false);
 			acted = true;
+			count--;
+			countText.text = "Turns Left: " + count;
+			CheckIfGameOver();
 		} else if (hit.transform.tag == "Hole" && isCarrying == "Body" && (Input.GetAxisRaw("Pick/put") != 0.0f)) {
 			isCarrying = "None";
+			carryText.text = "";
+			score += 1;
+			scoreText.text = "Score: " + score;
+			count--;
+			countText.text = "Turns Left: " + count;
+			CheckIfGameOver();
+			CheckIfNextLevel();
 			hit.transform.gameObject.SetActive(false);
 			acted = true;
 		}

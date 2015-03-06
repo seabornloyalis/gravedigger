@@ -4,17 +4,25 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-
+	
 	public float turnDelay = 0.1f;
+	public float levelStartDelay = 2f;
 	public static GameManager instance = null;
 	public BoardManager boardScript;
+	//public CameraController cameraScript;
 	public int playerHealth = 5;
+	public int playerScore = 0;
+	public int numEnemies;
+	public int numBodies;
 	[HideInInspector] public bool playersTurn = true;
 
 	private int level = 1;
+	private Text levelText;
+	private GameObject levelImage;
 	private List<Enemy> enemies;
 	private List<Body> bodies;
 	private bool enemiesMoving;
+	private bool doingSetup;
 
 	void Awake()
 	{
@@ -30,19 +38,44 @@ public class GameManager : MonoBehaviour {
 		enemies = new List<Enemy> ();
 		bodies = new List<Body> ();
 		boardScript = GetComponent<BoardManager> ();
+		/// do the thingcameraScript = 
 		InitGame ();
 	
 	}
 
+	private void OnLevelWasLoaded(int index)
+	{
+		level++;
+
+		InitGame ();
+	}
+
 	void InitGame()
 	{
+		doingSetup = true;
+
+		levelImage = GameObject.Find ("LevelImage");
+		levelText = GameObject.Find ("LevelText").GetComponent<Text> ();
+		levelText.text = "Night " + level;
+		levelImage.SetActive (true);
+		Invoke ("HideLevelImage", levelStartDelay);
+
 		enemies.Clear ();
 		bodies.Clear ();
+		//cameraScript.SetCamPos (level);
 		boardScript.SetupScene(level);
+	}
+
+	private void HideLevelImage()
+	{
+		levelImage.SetActive (false);
+		doingSetup = false;
 	}
 
 	public void Gameover()
 	{
+		levelText.text = "Your score was " + playerScore;
+		levelImage.SetActive (true);
 		enabled = false;
 	}
 
@@ -55,7 +88,7 @@ public class GameManager : MonoBehaviour {
 			//Debug.Log ("Enemies Moving\n"); 
 			//Debug.Log("There are " + enemies.Count + " enemies\n");
 		}
-		if (playersTurn || enemiesMoving) 
+		if (playersTurn || enemiesMoving || doingSetup) 
 		{
 			return;
 		}
@@ -66,27 +99,36 @@ public class GameManager : MonoBehaviour {
 	public void AddEnemyToList(Enemy script)
 	{
 		enemies.Add (script);
+		numEnemies = enemies.Count;
 	}
 
 	public void RemoveEnemyFromList(Enemy script)
 	{
 		enemies.Remove (script);
+		numEnemies = enemies.Count;
+	}
+
+	public void AddBodyToList(Body script)
+	{
+		bodies.Add (script);
+		numBodies = bodies.Count;
+	}
+
+	public void RemoveBodyFromList(Body script)
+	{
+		bodies.Remove (script);
+		numBodies = bodies.Count;
 		CheckIfNextLevel ();
 	}
 
-	void CheckIfNextLevel()
+	public void CheckIfNextLevel()
 	{
-		if (enemies.Count == 0)
+		if (enemies.Count == 0 && bodies.Count == 0)
 		{
 			//do the thing
 		}
 	}
-	
-
-	public void AddBodyToList(Body script) {
-		bodies.Add (script);
-	}
-
+		
 	IEnumerator MoveEnemies()
 	{
 		enemiesMoving = true;

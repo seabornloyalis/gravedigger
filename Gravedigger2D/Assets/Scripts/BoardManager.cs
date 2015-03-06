@@ -43,7 +43,7 @@ public class BoardManager : MonoBehaviour
 		{
 			for(int y = 1; y < levelRows - 1; y++)
 			{
-				gridPositions.Add(new Vector3(x, y, 0f));
+				gridPositions.Add(new Vector3(x, y , 0f));
 			}
 		}
 	}
