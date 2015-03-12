@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 public class Enemy : MovingObject {
 
@@ -14,6 +15,28 @@ public class Enemy : MovingObject {
 	{
 		GameManager.instance.AddEnemyToList (this);
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
+		int randDir =(int) Random.Range (1f, 4f);
+		switch (randDir) {
+		case 1:
+			lookDir = new Vector2 (0f, 1f);
+			RotateFacing(lookDir);
+			break;
+
+		case 2:
+			lookDir = new Vector2 (0f, -1f);
+			RotateFacing(lookDir);
+			break;
+
+		case 3:
+			lookDir = new Vector2 (-1f, 0f);
+			RotateFacing(lookDir);
+			break;
+
+		default:
+			lookDir = new Vector2 (1f, 0f);
+			break;
+		}
+
 		base.Start ();
 	}
 
@@ -41,6 +64,8 @@ public class Enemy : MovingObject {
 
 		base.AttemptMove<T> (xDir, yDir);
 
+		RotateFacing (new Vector2 (xDir, yDir));
+
 		skipMove = true;
 	}
 
@@ -61,8 +86,10 @@ public class Enemy : MovingObject {
 	protected override void OnCantMove<T> (T component)
 	{
 		Player hitPlayer = component as Player;
-
-		hitPlayer.LoseHealth (playerDamage);
+		int bonusMod = 1; //Multiplier for bonus dam
+		if (hitPlayer.lookDir == lookDir) //if hitting from behind
+			bonusMod = 2;
+		hitPlayer.LoseHealth (playerDamage * bonusMod);
 
 	}
 

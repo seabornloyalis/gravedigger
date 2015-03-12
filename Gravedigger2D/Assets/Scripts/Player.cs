@@ -17,15 +17,15 @@ public class Player : MovingObject {
 	public int score;
 	public int count = 150;
 	public GameObject hole;
+	public GameObject gravemarker;
 
 	private string isCarrying;
-	private Vector2 lookDir;
 
 	// Use this for initialization
 	protected override void Start ()
 	{
 		health = GameManager.instance.playerHealth;
-		health++; //added because its hard to get further without healing
+		health += 3; //added because its hard to get further without healing
 		score = GameManager.instance.playerScore;
 		isCarrying = "None";
 		carryText.text = "";
@@ -84,7 +84,10 @@ public class Player : MovingObject {
 	protected override void OnCantMove<T> (T component)
 	{
 		Enemy hitEnemy = component as Enemy;
-		hitEnemy.DamageEnemy (attackDamage);
+		int bonusMod = 1;
+		if (hitEnemy.lookDir == lookDir)
+			bonusMod = 2;
+		hitEnemy.DamageEnemy (attackDamage * bonusMod);
 	}
 
 	private void Restart()
@@ -135,35 +138,33 @@ public class Player : MovingObject {
 		} 
 		if(hit.transform == null)
 		{
-			//Debug.Log("null hit");
-			//GameManager.instance.playersTurn = false;
 			return;
 		}
 
-		//T hitComponent = hit.transform.GetComponent<T>();	
-		//Debug.Log (isCarrying);
-		//Debug.Log (hit.transform.tag);
-
-		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw("Pick/put") != 0.0f)) {
+		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
 			isCarrying = "Body";
 			carryText.text = "You have a body";
-			hit.transform.gameObject.SetActive(false);
+			hit.transform.gameObject.SetActive (false);
 			acted = true;
 			count--;
 			countText.text = "Turns Left: " + count;
-			CheckIfGameOver();
-		} else if (hit.transform.tag == "Hole" && isCarrying == "Body" && (Input.GetAxisRaw("Pick/put") != 0.0f)) {
+			CheckIfGameOver ();
+		} else if (hit.transform.tag == "Hole" && isCarrying == "Body" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
 			isCarrying = "None";
 			carryText.text = "";
 			score += 1;
 			scoreText.text = "Score: " + score;
 			count--;
 			countText.text = "Turns Left: " + count;
-			CheckIfGameOver();
-			CheckIfNextLevel();
-			hit.transform.gameObject.SetActive(false);
+			CheckIfGameOver ();
+			CheckIfNextLevel ();
+			hit.transform.gameObject.SetActive (false);
+			Instantiate (gravemarker, new Vector3 (end.x, end.y, 0f), Quaternion.identity);
 			acted = true;
-		}
+		} /*else if (hit.transform.tag == "Enemy" && Input.GetAxisRaw ("Attack") != 0f) {
+			AttemptMove<Enemy> ((int) lookDir.x, (int) lookDir.y);
+			acted = true;
+		}*/
 		if (acted) {
 			GameManager.instance.playersTurn = false;
 		}
@@ -187,21 +188,5 @@ public class Player : MovingObject {
 
 	private void Dig (Vector2 digLoc) {
 		Instantiate(hole, new Vector3(digLoc.x, digLoc.y, 0f), Quaternion.identity);
-	}
-
-	private void RotateFacing (Vector2 newFacing) {
-		lookDir = newFacing;
-
-		while (transform.rotation.z > 0.0f) {
-			transform.Rotate (0.0f, 0.0f, -90.0f);
-		}
-		if (lookDir.y == 1.0f)
-			transform.Rotate (0.0f, 0.0f, 90.0f);
-		else if (lookDir.x == -1.0f) {
-			transform.Rotate (0.0f, 0.0f, 90.0f);
-			transform.Rotate(0.0f, 0.0f, 90.0f);
-		}else if (lookDir.y == -1.0f)
-			transform.Rotate(0.0f, 0.0f, 270.0f);
-
 	}
 }

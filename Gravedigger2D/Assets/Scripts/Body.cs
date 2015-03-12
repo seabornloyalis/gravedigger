@@ -6,7 +6,7 @@ public class Body : MonoBehaviour {
 	public GameObject enemy;
 
 	void Start () {
-		turnsDormant = 3;
+		turnsDormant = 8;
 		GameManager.instance.AddBodyToList (this);
 	}
 
