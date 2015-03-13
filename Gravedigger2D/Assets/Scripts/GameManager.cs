@@ -68,6 +68,8 @@ public class GameManager : MonoBehaviour {
 
 		enemies.Clear ();
 		bodies.Clear ();
+		boardScript.mazeLevels.Add (2); //just 2 and 4 for now
+		boardScript.mazeLevels.Add (4);
 		//cameraScript.SetCamPos (level);
 		boardScript.SetupScene(level);
 	}
