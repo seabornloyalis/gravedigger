@@ -15,29 +15,30 @@ public class Enemy : MovingObject {
 	{
 		GameManager.instance.AddEnemyToList (this);
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
+
+		base.Start ();
+
 		int randDir =(int) Random.Range (1f, 4f);
 		switch (randDir) {
 		case 1:
 			lookDir = new Vector2 (0f, 1f);
 			RotateFacing(lookDir);
 			break;
-
+			
 		case 2:
 			lookDir = new Vector2 (0f, -1f);
 			RotateFacing(lookDir);
 			break;
-
+			
 		case 3:
 			lookDir = new Vector2 (-1f, 0f);
 			RotateFacing(lookDir);
 			break;
-
+			
 		default:
 			lookDir = new Vector2 (1f, 0f);
 			break;
 		}
-
-		base.Start ();
 	}
 
 	private void OnDisable()

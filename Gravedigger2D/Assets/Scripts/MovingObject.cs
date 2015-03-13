@@ -98,9 +98,10 @@ public abstract class MovingObject : MonoBehaviour {
 				transform.Rotate (0.0f, 0.0f, 90.0f);
 			}
 		} else if (lookDir.y == -1.0f) {
-			if (front != null)
+			/*if (front != null)
 				spriteRenderer.sprite = front;
 			else
+			 //Commented out until other facings implemented*/ 
 				transform.Rotate (0.0f, 0.0f, 270.0f);
 		} else if (lookDir.x == 1 && rightSide != null) {
 			spriteRenderer.sprite = rightSide;
