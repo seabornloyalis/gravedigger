@@ -12,12 +12,16 @@ public class GameManager : MonoBehaviour {
 	//public CameraController cameraScript;
 	public int playerHealth = 5;
 	public int playerScore = 0;
+	public int playerlvlScore = 0;
 	public int numEnemies;
 	public int numBodies;
+	public string scoreBreakdown;
+
 	[HideInInspector] public bool playersTurn = true;
 
 	private int level = 1;
 	private Text levelText;
+	private Text ScoreBreakText;
 	private GameObject levelImage;
 	private List<Enemy> enemies;
 	private List<Body> bodies;
@@ -56,7 +60,9 @@ public class GameManager : MonoBehaviour {
 
 		levelImage = GameObject.Find ("LevelImage");
 		levelText = GameObject.Find ("LevelText").GetComponent<Text> ();
+		ScoreBreakText = GameObject.Find ("ScoreBreakText").GetComponent<Text> ();
 		levelText.text = "Night " + level;
+		ScoreBreakText.text = scoreBreakdown;
 		levelImage.SetActive (true);
 		Invoke ("HideLevelImage", levelStartDelay);
 
@@ -69,6 +75,7 @@ public class GameManager : MonoBehaviour {
 	private void HideLevelImage()
 	{
 		levelImage.SetActive (false);
+		ScoreBreakText.text = "";
 		doingSetup = false;
 	}
 

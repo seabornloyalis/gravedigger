@@ -6,7 +6,7 @@ public class Player : MovingObject {
 
 	public int attackDamage = 1;
 	public int digPower = 1;
-	public float restartLevelDelay = 1f;
+	public float restartLevelDelay = 6f;
 	public float playerTurnDelay = 0.2f;
 	public Text scoreText;
 	public Text healthText;
@@ -14,7 +14,8 @@ public class Player : MovingObject {
 	public Text countText;
 
 	public int health;
-	public int score;
+	public int digScore;
+	public int lvlScore;
 	public int count = 150;
 	public GameObject hole;
 	public GameObject gravemarker;
@@ -26,11 +27,12 @@ public class Player : MovingObject {
 	{
 		health = GameManager.instance.playerHealth;
 		health += 3; //added because its hard to get further without healing
-		score = GameManager.instance.playerScore;
+		digScore = GameManager.instance.playerScore;
+		lvlScore = GameManager.instance.playerlvlScore;
 		isCarrying = "None";
 		carryText.text = "";
 		healthText.text = "Health: " + health;
-		scoreText.text = "Score: " + score;
+		scoreText.text = "Score: " + (lvlScore + digScore);
 		countText.text = "Turns Left: " + count;
 		lookDir = new Vector2 (1.0f, 0.0f);
 		base.Start ();
@@ -39,8 +41,11 @@ public class Player : MovingObject {
 	private void OnDisable()
 	{
 		GameManager.instance.playerHealth = health;
-		score += count;
-		GameManager.instance.playerScore = score;
+		lvlScore += count;
+		GameManager.instance.playerlvlScore = lvlScore;
+		GameManager.instance.playerScore = digScore;
+		string s = "Score Breakdown:\n Buried zombies: " + digScore + "\n Leveling up: " + lvlScore;
+		GameManager.instance.scoreBreakdown = s;
 	}
 	
 	// Update is called once per frame
@@ -105,6 +110,8 @@ public class Player : MovingObject {
 	private void CheckIfGameOver()
 	{
 		if (health <= 0 || count <= 0) {
+			GameManager.instance.playerScore = digScore;
+			GameManager.instance.playerlvlScore = lvlScore;
 	 		GameManager.instance.Gameover ();
 		}
 	}
@@ -152,8 +159,8 @@ public class Player : MovingObject {
 		} else if (hit.transform.tag == "Hole" && isCarrying == "Body" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
 			isCarrying = "None";
 			carryText.text = "";
-			score += 1;
-			scoreText.text = "Score: " + score;
+			digScore += 1;
+			scoreText.text = "Score: " + (digScore + lvlScore);
 			count--;
 			countText.text = "Turns Left: " + count;
 			CheckIfGameOver ();
