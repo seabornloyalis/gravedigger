@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class MovingObject : MonoBehaviour {
 
-	public float moveTime = 0.1f;
+	public float moveTime = 0.05f;
 	public LayerMask blockingLayer;
 	public Sprite front;
 	public Sprite back;
@@ -80,11 +80,11 @@ public abstract class MovingObject : MonoBehaviour {
 	public void RotateFacing (Vector2 newFacing) {
 		lookDir = newFacing;
 		
-		if (back == null || leftSide == null || rightSide == null) {
+		/*if (back == null || leftSide == null || rightSide == null) {
 			while (transform.rotation.z > 0.0f) {
 				transform.Rotate (0.0f, 0.0f, -90.0f);
 			}
-		}
+		}*/
 		if (lookDir.y == 1.0f) {
 			if (back != null)
 				spriteRenderer.sprite = back;
@@ -98,7 +98,7 @@ public abstract class MovingObject : MonoBehaviour {
 				transform.Rotate (0.0f, 0.0f, 90.0f);
 			}
 		} else if (lookDir.y == -1.0f) {
-			/*if (front != null)
+			if (front != null)
 				spriteRenderer.sprite = front;
 			else
 			 //Commented out until other facings implemented*/ 
