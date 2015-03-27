@@ -75,15 +75,28 @@ public class Player : MovingObject {
 
 		int horizontal = 0;
 		int vertical = 0;
+		float rotateHoriz = 0; //for joystick only
+		float rotateVert = 0;
 
 		horizontal = (int)Input.GetAxisRaw ("Horizontal");
 		vertical = (int)Input.GetAxisRaw ("Vertical");
+		rotateHoriz = Input.GetAxisRaw ("RotateX");
+		rotateVert = Input.GetAxisRaw ("RotateY");
 
 		if (horizontal != 0)
 		{
 			vertical = 0;
-		} 
-		if ((horizontal != 0 || vertical != 0) && Input.GetAxisRaw ("Rotate") == 1) {
+		}
+		if ((int) rotateHoriz != 0) {
+			if (Mathf.Abs(rotateHoriz) > Mathf.Abs(rotateVert))
+				rotateVert = 0;
+			else
+				rotateHoriz = 0;
+		}
+		if ((int) rotateHoriz != 0 || (int) rotateVert != 0) {
+			RotateFacing(new Vector2((int) rotateHoriz, (int) rotateVert));
+		}
+		else if ((horizontal != 0 || vertical != 0) && Input.GetAxisRaw ("Rotate") == 1) {
 			RotateFacing(new Vector2(horizontal, vertical));
 		} else if (horizontal != 0 || vertical != 0) {
 			AttemptMove<Enemy> (horizontal, vertical);
