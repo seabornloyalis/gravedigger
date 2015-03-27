@@ -18,29 +18,26 @@ public class BoardManager : MonoBehaviour
 		}
 	}
 	
-	public int columns = 7;
-	public int rows = 7;
+	public int columns = 4;
+	public int rows = 4;
 	
-	public Count obstacleCount = new Count(1, 3);
+	public Count obstacleCount = new Count(5, 7);
 	public GameObject[] floorTiles; // all arrays for easy change later if/when we have multiple of each
 	public GameObject[] obstacleTiles;
 	public GameObject outerWallTile;
 	public GameObject[] enemyTiles;
 	public GameObject cornTile;
-	public List<int> mazeLevels = new List<int> ();
 	
 	private Transform boardHolder;
 	private List<Vector3> gridPositions = new List<Vector3>();
 	
-	void InitialiseList(int level)
+	void InitialiseList(int levelRows, int levelColumns)
 	{
 		gridPositions.Clear ();
-		float cameraModifier = (level * 0.5f);
-		Camera.main.orthographicSize = 4.5f + cameraModifier;
+		//float cameraModifier = (level * 0.5f);
+		//Camera.main.orthographicSize = 4.5f + cameraModifier;
 		//Camera.main.transform.position.x = 3.0f + cameraModifier; // can't set the x y like this but
 		//Camera.main.transform.position.y = 3.0f + cameraModifier; // this position will capture the game board in full
-		int levelColumns = columns + level;
-		int levelRows = rows + level;
 		for(int x = 1; x < levelColumns - 1; x++)
 		{
 			for(int y = 1; y < levelRows - 1; y++)
@@ -50,13 +47,9 @@ public class BoardManager : MonoBehaviour
 		}
 	}
 	
-	void BoardSetup(int level)
+	void BoardSetup(int levelRows, int levelColumns)
 	{
 		boardHolder = new GameObject ("Board").transform;
-		
-		int levelColumns = columns + level;
-		int levelRows = rows + level;
-		
 		for(int x = -1; x < levelColumns + 1; x++)
 		{
 			for(int y = -1; y < levelRows + 1; y++)
@@ -95,10 +88,31 @@ public class BoardManager : MonoBehaviour
 		}
 		
 	}
+
+	void LayoutCornRows(int levelRows, int levelColumns) {
+		int cornDir = Random.Range (0, 2); //0 for vert, 1 for horiz
+		for(int x = 1; x < levelColumns -1; x++)
+		{
+			for(int y = 1; y < levelRows -1; y++)
+			{
+				Vector3 loc = new Vector3(x,y,0f);
+				if ((x%2) != 0 && (y%2) != 0) {
+					Instantiate(cornTile, loc, Quaternion.identity);
+					gridPositions.Remove(loc);
+				}
+				if (cornDir == 0 && (x%2) != 0) {
+					Instantiate(cornTile, loc, Quaternion.identity);
+					gridPositions.Remove(loc);
+				}
+				else if (cornDir == 1 && (y%2) != 0) {
+					Instantiate(cornTile, loc, Quaternion.identity);
+					gridPositions.Remove(loc);
+				}
+			}
+		}
+	}
 	
-	void LayoutCornMaze(int level) {
-		int levelColumns = columns + level;
-		int levelRows = rows + level;
+	void LayoutCornMaze(int levelRows, int levelColumns) {
 		int cornMazeExits = 2;
 		List<Vector3> walls = new List<Vector3>();
 		List<Vector3> exits = new List<Vector3> ();
@@ -132,23 +146,23 @@ public class BoardManager : MonoBehaviour
 				}
 			}
 		}
-		CreateInteriorWalls (walls, level);
+		CreateInteriorWalls (walls, levelRows, levelColumns);
 	}
 	
-	void CreateInteriorWalls(List<Vector3> walls, int level) {
+	void CreateInteriorWalls(List<Vector3> walls, int levelRows, int levelColumns) {
 		for (int i = 0; i < walls.Count; i++) {
 			Vector3 randLoc = walls[Random.Range(0, walls.Count)];
-			if (BuildNearWalls(randLoc, level)) {
+			if (BuildNearWalls(randLoc, levelRows, levelColumns)) {
 				//walls.Remove(randLoc);
 				return;
 			}
-		}  //still got issues
+		}
 	}
 	
-	bool BuildNearWalls(Vector3 loc, int level) {
-		int colsMid = (columns + level)/2;
-		int rowsMid = (rows + level)/2;
-		if (/*loc.x > colsMid &&*/ gridPositions.Contains (loc + new Vector3 (-1f, 0f, 0f)) &&
+	bool BuildNearWalls(Vector3 loc, int levelRows, int levelColumns) {
+		int colsMid = levelColumns/2;
+		int rowsMid = levelRows/2;
+		if ( gridPositions.Contains (loc + new Vector3 (-1f, 0f, 0f)) &&
 		    gridPositions.Contains (loc + new Vector3 (-2f, 0, 0f)) &&
 		    gridPositions.Contains (loc + new Vector3 (-1f, 1, 0f)) &&
 		    gridPositions.Contains (loc + new Vector3 (-1f, -1, 0f))) {
@@ -156,10 +170,10 @@ public class BoardManager : MonoBehaviour
 			Instantiate(cornTile, nextLoc, Quaternion.identity);
 			gridPositions.Remove(nextLoc);
 			
-			BuildNearWalls(nextLoc, level);
+			BuildNearWalls(nextLoc, levelRows, levelColumns);
 			return true;
 		}
-		else if (/*loc.x < colsMid &&*/ gridPositions.Contains (loc + new Vector3 (1f, 0f, 0f)) &&
+		else if (gridPositions.Contains (loc + new Vector3 (1f, 0f, 0f)) &&
 		         gridPositions.Contains (loc + new Vector3 (2, 0, 0f)) &&
 		         gridPositions.Contains (loc + new Vector3 (1f, 1, 0f)) &&
 		         gridPositions.Contains (loc + new Vector3 (1f, -1, 0f))) {
@@ -167,7 +181,7 @@ public class BoardManager : MonoBehaviour
 			Instantiate(cornTile, nextLoc, Quaternion.identity);
 			gridPositions.Remove(nextLoc);
 			
-			BuildNearWalls(nextLoc, level);
+			BuildNearWalls(nextLoc, levelRows, levelColumns);
 			return true;
 		}
 		else if (/*loc.y > rowsMid &&*/ gridPositions.Contains (loc + new Vector3 (0f, -1, 0f)) &&
@@ -178,7 +192,7 @@ public class BoardManager : MonoBehaviour
 			Instantiate(cornTile, nextLoc, Quaternion.identity);
 			gridPositions.Remove(nextLoc);
 			
-			BuildNearWalls(nextLoc, level);
+			BuildNearWalls(nextLoc, levelRows, levelColumns);
 			return true;
 		}
 		else if (/*loc.x < rowsMid &&*/ gridPositions.Contains (loc + new Vector3 (0, 1, 0f)) &&
@@ -189,7 +203,7 @@ public class BoardManager : MonoBehaviour
 			Instantiate(cornTile, nextLoc, Quaternion.identity);
 			gridPositions.Remove(nextLoc);
 			
-			BuildNearWalls(nextLoc, level);
+			BuildNearWalls(nextLoc, levelRows, levelColumns);
 			return true;
 		}
 		return false;
@@ -197,14 +211,64 @@ public class BoardManager : MonoBehaviour
 	
 	public void SetupScene(int level)
 	{
-		BoardSetup (level);
-		InitialiseList (level);
-		if (mazeLevels.Contains (level))
-			LayoutCornMaze(level);
-		else
+		switch (level) {
+		case 1:
+			BoardSetup (rows + level, columns + level);
+			InitialiseList (rows + level, columns + level);
+			LayoutObjectAtRandom (enemyTiles, level, level);
+			break;
+
+		case 2:
+			BoardSetup (rows + level, columns + level);
+			InitialiseList (rows + level, columns + level);
+			LayoutObjectAtRandom (obstacleTiles, level, level + 2);
+			LayoutObjectAtRandom (enemyTiles, level, level);
+			break;
+
+		case 3:
+			BoardSetup (rows + level, columns + level);
+			InitialiseList (rows + level, columns + level);
+			LayoutCornMaze(rows + level, columns + level);
+			LayoutObjectAtRandom (enemyTiles, level, level);
+			break;
+
+		case 4:
+			BoardSetup (rows + level, columns + level);
+			InitialiseList (rows + level, columns + level);
+			LayoutCornRows(rows + level, columns + level);
+			LayoutObjectAtRandom (enemyTiles, level, level);
+			break;
+
+		case 5:
+			BoardSetup (level + columns, level + rows);//TO FIGURE OUT
+			InitialiseList (level + columns, level + rows);
 			LayoutObjectAtRandom (obstacleTiles, obstacleCount.minimum + level, obstacleCount.maximum + level);
-		//int enemyCount = (int)Mathf.Log (level, 2f); // incase we want to change the difficulty system
-		LayoutObjectAtRandom (enemyTiles, level + 3, level + 3);
+			//int enemyCount = (int)Mathf.Log (level, 2f); // incase we want to change the difficulty system
+			LayoutObjectAtRandom (enemyTiles, level, level);
+			break;
+
+		default:
+			int levelCols;
+			if (level < 12)
+				levelCols = level + columns;
+			else
+				levelCols = 16;
+
+			BoardSetup (8, levelCols);
+			InitialiseList (8, levelCols);
+			if ((level % 2) == 0)
+				LayoutCornMaze(8, levelCols);
+			else {
+				int randType = Random.Range(0, 2); //0 for clear, 1 for rows
+				if (randType == 0)
+					LayoutObjectAtRandom (obstacleTiles, obstacleCount.minimum + level, obstacleCount.maximum + level);
+				else if (randType == 1)
+					LayoutCornRows(8, levelCols);
+			}
+			//int enemyCount = (int)Mathf.Log (level, 2f); // incase we want to change the difficulty system
+			LayoutObjectAtRandom (enemyTiles, level, level);
+			break;
+		}
 	}
 	
 }

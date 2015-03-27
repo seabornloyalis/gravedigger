@@ -26,7 +26,7 @@ public class Player : MovingObject {
 	protected override void Start ()
 	{
 		health = GameManager.instance.playerHealth;
-		health += 3; //added because its hard to get further without healing
+		health += 2; //added because its hard to get further without healing
 		digScore = GameManager.instance.playerScore;
 		lvlScore = GameManager.instance.playerlvlScore;
 		isCarrying = "None";
