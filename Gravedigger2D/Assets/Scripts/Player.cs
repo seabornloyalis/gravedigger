@@ -26,7 +26,6 @@ public class Player : MovingObject {
 	protected override void Start ()
 	{
 		health = GameManager.instance.playerHealth;
-		health += 2; //added because its hard to get further without healing
 		digScore = GameManager.instance.playerScore;
 		lvlScore = GameManager.instance.playerlvlScore;
 		isCarrying = "None";
@@ -37,13 +36,31 @@ public class Player : MovingObject {
 		lookDir = new Vector2 (1.0f, 0.0f);
 		base.Start ();
 	}
-
+	/*
+	public void RestartButton()
+	{
+		Debug.Log ("STUFF\n");
+		health = 5;
+		count = 150;
+		digScore = 0;
+		lvlScore = 0;
+		isCarrying = "None";
+		carryText.text = "";
+		healthText.text = "Health: " + health;
+		scoreText.text = "Score: " + (lvlScore + digScore);
+		countText.text = "Turns Left: " + count;
+		lookDir = new Vector2 (1.0f, 0.0f);
+		GameManager.instance.RestartButton ();
+		//Invoke("Restart", restartLevelDelay);
+		Application.LoadLevel (0);
+	}
+	*/
 	private void OnDisable()
 	{
 		GameManager.instance.playerHealth = health;
 		lvlScore += count;
-		GameManager.instance.playerlvlScore += lvlScore;
-		GameManager.instance.playerScore += digScore;
+		GameManager.instance.playerlvlScore = lvlScore;
+		GameManager.instance.playerScore = digScore;
 		string s = "Score Breakdown:\n Buried zombies: " + digScore + "\n Leveling up: " + lvlScore;
 		GameManager.instance.scoreBreakdown = s;
 	}
@@ -97,6 +114,7 @@ public class Player : MovingObject {
 
 	private void Restart()
 	{
+		//Debug.Log ("Loadedlevel was: " + Application.loadedLevel + "\n");
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
@@ -110,8 +128,8 @@ public class Player : MovingObject {
 	private void CheckIfGameOver()
 	{
 		if (health <= 0 || count <= 0) {
-			GameManager.instance.playerScore += digScore;
-			GameManager.instance.playerlvlScore += lvlScore;
+			GameManager.instance.playerScore = digScore;
+			GameManager.instance.playerlvlScore = lvlScore;
 	 		GameManager.instance.Gameover ();
 		}
 	}

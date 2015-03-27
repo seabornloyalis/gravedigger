@@ -46,7 +46,19 @@ public class GameManager : MonoBehaviour {
 		InitGame ();
 	
 	}
+	/*
+	public void RestartButton()
+	{
+		level = 1;
+		playerHealth = 5;
+		playerScore = 0;
+		playerlvlScore = 0;
+		enemies.Clear ();
+		bodies.Clear ();
 
+		boardScript.SetupScene (level);
+	}
+	*/
 	private void OnLevelWasLoaded(int index)
 	{
 		level++;
@@ -68,7 +80,6 @@ public class GameManager : MonoBehaviour {
 
 		enemies.Clear ();
 		bodies.Clear ();
-		//cameraScript.SetCamPos (level);
 		boardScript.SetupScene(level);
 	}
 
@@ -83,6 +94,7 @@ public class GameManager : MonoBehaviour {
 	{
 		levelText.text = "Your score was " + playerScore;
 		levelImage.SetActive (true);
+
 		enabled = false;
 	}
 

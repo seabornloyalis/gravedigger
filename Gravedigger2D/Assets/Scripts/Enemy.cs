@@ -8,6 +8,7 @@ public class Enemy : MovingObject {
 	public int playerDamage = 1;
 	public GameObject body;
 
+	private bool grapple = false;
 	private Transform target;
 	private bool skipMove;
 
@@ -49,6 +50,7 @@ public class Enemy : MovingObject {
 	public void DamageEnemy(int loss)
 	{
 		health -= loss;
+		grapple = true;
 		if (health <= 0) {
 			gameObject.SetActive(false);
 			Instantiate(body, transform.position, Quaternion.identity);
@@ -90,8 +92,11 @@ public class Enemy : MovingObject {
 		int bonusMod = 1; //Multiplier for bonus dam
 		if (hitPlayer.lookDir == lookDir) //if hitting from behind
 			bonusMod = 2;
-		hitPlayer.LoseHealth (playerDamage * bonusMod);
 
+		if (!grapple) {
+				hitPlayer.LoseHealth (playerDamage * bonusMod);
+		}
+		grapple = false;
 	}
 
 }
