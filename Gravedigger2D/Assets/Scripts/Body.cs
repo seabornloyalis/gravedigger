@@ -4,6 +4,7 @@ using System.Collections;
 public class Body : MonoBehaviour {
 	private int turnsDormant;
 	public GameObject enemy;
+	public int bodyTypeID;
 
 	void Start () {
 		turnsDormant = 8;

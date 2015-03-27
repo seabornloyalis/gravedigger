@@ -42,8 +42,8 @@ public class Player : MovingObject {
 	{
 		GameManager.instance.playerHealth = health;
 		lvlScore += count;
-		GameManager.instance.playerlvlScore = lvlScore;
-		GameManager.instance.playerScore = digScore;
+		GameManager.instance.playerlvlScore += lvlScore;
+		GameManager.instance.playerScore += digScore;
 		string s = "Score Breakdown:\n Buried zombies: " + digScore + "\n Leveling up: " + lvlScore;
 		GameManager.instance.scoreBreakdown = s;
 	}
@@ -110,8 +110,8 @@ public class Player : MovingObject {
 	private void CheckIfGameOver()
 	{
 		if (health <= 0 || count <= 0) {
-			GameManager.instance.playerScore = digScore;
-			GameManager.instance.playerlvlScore = lvlScore;
+			GameManager.instance.playerScore += digScore;
+			GameManager.instance.playerlvlScore += lvlScore;
 	 		GameManager.instance.Gameover ();
 		}
 	}
@@ -149,17 +149,16 @@ public class Player : MovingObject {
 		}
 
 		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
-			isCarrying = "Body";
+			isCarrying = "Body" + hit.transform.gameObject.GetComponent<Body>().bodyTypeID;
 			carryText.text = "You have a body";
 			hit.transform.gameObject.SetActive (false);
 			acted = true;
 			count--;
 			countText.text = "Turns Left: " + count;
 			CheckIfGameOver ();
-		} else if (hit.transform.tag == "Hole" && isCarrying == "Body" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
-			isCarrying = "None";
+		} else if (hit.transform.tag == "Hole" && isCarrying.Contains("Body") && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
 			carryText.text = "";
-			digScore += 1;
+			digScore += (6 - int.Parse(isCarrying[4].ToString())) * 10;
 			scoreText.text = "Score: " + (digScore + lvlScore);
 			count--;
 			countText.text = "Turns Left: " + count;
@@ -167,6 +166,7 @@ public class Player : MovingObject {
 			CheckIfNextLevel ();
 			hit.transform.gameObject.SetActive (false);
 			Instantiate (gravemarker, new Vector3 (end.x, end.y, 0f), Quaternion.identity);
+			isCarrying = "None";
 			acted = true;
 		} /*else if (hit.transform.tag == "Enemy" && Input.GetAxisRaw ("Attack") != 0f) {
 			AttemptMove<Enemy> ((int) lookDir.x, (int) lookDir.y);
