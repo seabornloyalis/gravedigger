@@ -55,6 +55,11 @@ public class Player : MovingObject {
 		Application.LoadLevel (0);
 	}
 	*/
+
+	public void ContinueButton()
+	{
+		GameManager.instance.HideLevelImage ();
+	}
 	private void OnDisable()
 	{
 		GameManager.instance.playerHealth = health;

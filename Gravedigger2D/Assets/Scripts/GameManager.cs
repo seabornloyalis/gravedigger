@@ -76,14 +76,14 @@ public class GameManager : MonoBehaviour {
 		levelText.text = "Night " + level;
 		ScoreBreakText.text = scoreBreakdown;
 		levelImage.SetActive (true);
-		Invoke ("HideLevelImage", levelStartDelay);
+		//Invoke ("HideLevelImage", levelStartDelay);
 
 		enemies.Clear ();
 		bodies.Clear ();
 		boardScript.SetupScene(level);
 	}
 
-	private void HideLevelImage()
+	public void HideLevelImage()
 	{
 		levelImage.SetActive (false);
 		ScoreBreakText.text = "";
