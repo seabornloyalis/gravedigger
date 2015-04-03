@@ -102,9 +102,21 @@ public class Player : MovingObject {
 		if (horizontal != 0)
 		{
 			vertical = 0;
+<<<<<<< HEAD
 		} 
 		if ((horizontal != 0 || vertical != 0) && Input.GetAxisRaw ("Rotate") == 1) {
 			RotateFacing(new Vector2(horizontal, vertical));
+=======
+		}
+		if ((int) rotateHoriz != 0) {
+			if (Mathf.Abs(rotateHoriz) > Mathf.Abs(rotateVert))
+				rotateVert = 0;
+			else
+				rotateHoriz = 0;
+		}
+		if ((int) rotateHoriz != 0 || (int) rotateVert != 0) {
+			RotateFacing(new Vector2((int) rotateHoriz, (int) rotateVert));
+>>>>>>> 2f3479cb2dbb61d1d1f9ba539f5d99fa06b9d30f
 		} else if (horizontal != 0 || vertical != 0) {
 			AttemptMove<Enemy> (horizontal, vertical);
 		} else  {
@@ -193,6 +205,10 @@ public class Player : MovingObject {
 			return;
 		}
 
+		if (hit.transform.tag == "Enemy" && (Input.GetAxisRaw ("Attack") != 0.0f)) {
+			AttemptMove<Enemy> ((int)lookDir.x, (int)lookDir.y);
+			acted = true;
+		}
 		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
 			isCarrying = "Body" + hit.transform.gameObject.GetComponent<Body>().bodyTypeID;
 			carryText.text = "You have a body";
@@ -213,10 +229,7 @@ public class Player : MovingObject {
 			Instantiate (gravemarker, new Vector3 (end.x, end.y, 0f), Quaternion.identity);
 			isCarrying = "None";
 			acted = true;
-		} /*else if (hit.transform.tag == "Enemy" && Input.GetAxisRaw ("Attack") != 0f) {
-			AttemptMove<Enemy> ((int) lookDir.x, (int) lookDir.y);
-			acted = true;
-		}*/
+		}
 		if (acted) {
 			GameManager.instance.playersTurn = false;
 		}
