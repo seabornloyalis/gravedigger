@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
 	private Text levelText;
 	private Text ScoreBreakText;
 	private GameObject levelImage;
+	private GameObject tutImage;
 	private List<Enemy> enemies;
 	private List<Body> bodies;
 	private bool enemiesMoving;
@@ -71,9 +72,10 @@ public class GameManager : MonoBehaviour {
 		doingSetup = true;
 
 		levelImage = GameObject.Find ("LevelImage");
+		tutImage = GameObject.Find ("TutorialImage");
 		levelText = GameObject.Find ("LevelText").GetComponent<Text> ();
 		ScoreBreakText = GameObject.Find ("ScoreBreakText").GetComponent<Text> ();
-		levelText.text = "Night " + level;
+		levelText.text = "" + level;
 		ScoreBreakText.text = scoreBreakdown;
 		levelImage.SetActive (true);
 		//Invoke ("HideLevelImage", levelStartDelay);
@@ -92,10 +94,23 @@ public class GameManager : MonoBehaviour {
 
 	public void Gameover()
 	{
-		levelText.text = "Your score was " + playerScore;
+		ScoreBreakText.text = "Your score was " + playerScore;
 		levelImage.SetActive (true);
 
 		enabled = false;
+	}
+
+	public void TutorialButtonHelper()
+	{
+		doingSetup = true;
+		tutImage.SetActive (true);
+	}
+
+
+	public void CloseTutButtonHelper()
+	{
+		tutImage.SetActive (false);
+		doingSetup = false;
 	}
 
 	void Update()

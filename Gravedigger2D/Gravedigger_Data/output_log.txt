@@ -12,21 +12,15 @@ Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Grav
 Loading C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.048 seconds
+- Completed reload, in  0.070 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\System.dll (this message is harmless)
-UnloadTime: 3.747878 ms
+UnloadTime: 2.847093 ms
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 295.
-Total: 2.177935 ms (FindLiveObjects: 0.035022 ms CreateObjectMapping: 0.027551 ms MarkObjects: 0.403459 ms  DeleteObjects: 0.012608 ms)
-
-UnloadTime: 2.172798 ms
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 295.
-Total: 2.095748 ms (FindLiveObjects: 0.034088 ms CreateObjectMapping: 0.028018 ms MarkObjects: 0.416534 ms  DeleteObjects: 0.010740 ms)
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 219.
+Total: 1.401832 ms (FindLiveObjects: 0.018211 ms CreateObjectMapping: 0.017744 ms MarkObjects: 0.264769 ms  DeleteObjects: 0.007004 ms)
 

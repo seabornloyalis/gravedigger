@@ -8,6 +8,7 @@ public class Player : MovingObject {
 	public int digPower = 1;
 	public float restartLevelDelay = 6f;
 	public float playerTurnDelay = 0.2f;
+	public float damageTime = 0.1f;
 	public Text scoreText;
 	public Text healthText;
 	public Text carryText;
@@ -21,12 +22,15 @@ public class Player : MovingObject {
 	public GameObject gravemarker;
 
 	private string isCarrying;
+	private GameObject damageImage;
 
 	// Use this for initialization
 	protected override void Start ()
 	{
 		health = GameManager.instance.playerHealth;
 		digScore = GameManager.instance.playerScore;
+		damageImage = GameObject.Find ("DamageImage");
+		damageImage.SetActive (false);
 		lvlScore = GameManager.instance.playerlvlScore;
 		isCarrying = "None";
 		carryText.text = "";
@@ -60,6 +64,17 @@ public class Player : MovingObject {
 	{
 		GameManager.instance.HideLevelImage ();
 	}
+
+	public void TutorialButton()
+	{
+		GameManager.instance.TutorialButtonHelper ();
+	}
+	
+	public void CloseTutButton()
+	{
+		GameManager.instance.CloseTutButtonHelper ();
+	}
+
 	private void OnDisable()
 	{
 		GameManager.instance.playerHealth = health;
@@ -80,28 +95,15 @@ public class Player : MovingObject {
 
 		int horizontal = 0;
 		int vertical = 0;
-		float rotateHoriz = 0; //for joystick only
-		float rotateVert = 0;
 
 		horizontal = (int)Input.GetAxisRaw ("Horizontal");
 		vertical = (int)Input.GetAxisRaw ("Vertical");
-		rotateHoriz = Input.GetAxisRaw ("RotateX");
-		rotateVert = Input.GetAxisRaw ("RotateY");
 
 		if (horizontal != 0)
 		{
 			vertical = 0;
-		}
-		if ((int) rotateHoriz != 0) {
-			if (Mathf.Abs(rotateHoriz) > Mathf.Abs(rotateVert))
-				rotateVert = 0;
-			else
-				rotateHoriz = 0;
-		}
-		if ((int) rotateHoriz != 0 || (int) rotateVert != 0) {
-			RotateFacing(new Vector2((int) rotateHoriz, (int) rotateVert));
-		}
-		else if ((horizontal != 0 || vertical != 0) && Input.GetAxisRaw ("Rotate") == 1) {
+		} 
+		if ((horizontal != 0 || vertical != 0) && Input.GetAxisRaw ("Rotate") == 1) {
 			RotateFacing(new Vector2(horizontal, vertical));
 		} else if (horizontal != 0 || vertical != 0) {
 			AttemptMove<Enemy> (horizontal, vertical);
@@ -140,7 +142,14 @@ public class Player : MovingObject {
 	{
 		health -= loss;
 		healthText.text = "Health: " + health;
+		damageImage.SetActive (true);
+		Invoke ("DisplayDamage", damageTime);
 		CheckIfGameOver ();
+	}
+
+	private void DisplayDamage()
+	{
+			damageImage.SetActive(false);
 	}
 
 	private void CheckIfGameOver()
