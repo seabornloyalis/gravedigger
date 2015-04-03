@@ -113,7 +113,8 @@ public class Player : MovingObject {
 				rotateVert = 0;
 			else
 				rotateHoriz = 0;
-		} else if ((int) rotateHoriz != 0 || (int) rotateVert != 0) {
+		} 
+		if ((int) rotateHoriz != 0 || (int) rotateVert != 0) {
 			RotateFacing(new Vector2((int) rotateHoriz, (int) rotateVert));
 		} else if (horizontal != 0 || vertical != 0) {
 			AttemptMove<Enemy> (horizontal, vertical);

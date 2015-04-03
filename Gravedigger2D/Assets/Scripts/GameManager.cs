@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	
-	public float turnDelay = 0.05f;
+	public float turnDelay = 0.5f;
 	public float levelStartDelay = 2f;
 	public static GameManager instance = null;
 	public BoardManager boardScript;
