@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: ec8f6f6a585ff944e8f7651fe1efa2b5
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - hole: {fileID: 106646, guid: e9021ed7410a5e64283c1647d29dc567, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
