@@ -122,7 +122,11 @@ public class GameManager : MonoBehaviour {
 	}
 	public void TutPlayStationHelper()
 	{
+<<<<<<< HEAD
 		tutText.text = "Controls:\nRotate with the Analog Stick\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
+=======
+		tutText.text = "Controls:\nRotate with the D-pad\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
+>>>>>>> 5e53632a34a89d8ae996ada06982d62d786d1cca
 	}
 
 	void Update()
