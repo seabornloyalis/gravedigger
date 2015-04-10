@@ -9,8 +9,7 @@ public class GameManager : MonoBehaviour {
 	public float levelStartDelay = 2f;
 	public static GameManager instance = null;
 	public BoardManager boardScript;
-	public AudioSource audioPlayer;
-	public List<AudioClip> songs;
+	//public CameraController cameraScript;
 	public int playerHealth = 5;
 	public int playerScore = 0;
 	public int playerlvlScore = 0;
@@ -29,7 +28,6 @@ public class GameManager : MonoBehaviour {
 	private List<Body> bodies;
 	private bool enemiesMoving;
 	private bool doingSetup;
-	private int currSongIndex = 0;
 
 	void Awake()
 	{
@@ -45,9 +43,7 @@ public class GameManager : MonoBehaviour {
 		enemies = new List<Enemy> ();
 		bodies = new List<Body> ();
 		boardScript = GetComponent<BoardManager> ();
-		audioPlayer = GetComponent<AudioSource> ();
-		audioPlayer.clip = songs [0];
-		audioPlayer.Play();
+		/// do the thingcameraScript = 
 		InitGame ();
 	
 	}
@@ -74,6 +70,7 @@ public class GameManager : MonoBehaviour {
 	void InitGame()
 	{
 		doingSetup = true;
+
 		levelImage = GameObject.Find ("LevelImage");
 		tutImage = GameObject.Find ("TutorialImage");
 		levelText = GameObject.Find ("LevelText").GetComponent<Text> ();
@@ -81,6 +78,8 @@ public class GameManager : MonoBehaviour {
 		levelText.text = "" + level;
 		ScoreBreakText.text = scoreBreakdown;
 		levelImage.SetActive (true);
+		//Invoke ("HideLevelImage", levelStartDelay);
+
 		enemies.Clear ();
 		bodies.Clear ();
 		boardScript.SetupScene(level);
@@ -116,11 +115,6 @@ public class GameManager : MonoBehaviour {
 
 	void Update()
 	{
-		if (audioPlayer.isPlaying == false) {
-			audioPlayer.clip = songs[(currSongIndex + 1) % songs.Count];
-			audioPlayer.Play();
-			currSongIndex++;
-		}
 		if (playersTurn) {
 			//Debug.Log ("Still player Turn\n");
 		}
