@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
 	public int playerHealth = 5;
 	public int playerScore = 0;
 	public int playerlvlScore = 0;
+	public int zombieKills = 0;
+	public int moveCount = 0;
 	public int numEnemies;
 	public int numBodies;
 	public string scoreBreakdown;
@@ -22,9 +24,12 @@ public class GameManager : MonoBehaviour {
 
 	private int level = 1;
 	private Text levelText;
-	private Text ScoreBreakText;
+	private Text scoreBreakText;
+	private Text zombieCountText;
+	private Text moveBreakText;
 	private GameObject levelImage;
 	private GameObject tutImage;
+	private Text tutText; // to be removed when controls finalized
 	private List<Enemy> enemies;
 	private List<Body> bodies;
 	private bool enemiesMoving;
@@ -51,19 +56,7 @@ public class GameManager : MonoBehaviour {
 		InitGame ();
 	
 	}
-	/*
-	public void RestartButton()
-	{
-		level = 1;
-		playerHealth = 5;
-		playerScore = 0;
-		playerlvlScore = 0;
-		enemies.Clear ();
-		bodies.Clear ();
-
-		boardScript.SetupScene (level);
-	}
-	*/
+	
 	private void OnLevelWasLoaded(int index)
 	{
 		level++;
@@ -76,10 +69,15 @@ public class GameManager : MonoBehaviour {
 		doingSetup = true;
 		levelImage = GameObject.Find ("LevelImage");
 		tutImage = GameObject.Find ("TutorialImage");
+		tutText = GameObject.Find ("TutText").GetComponent<Text>();
 		levelText = GameObject.Find ("LevelText").GetComponent<Text> ();
-		ScoreBreakText = GameObject.Find ("ScoreBreakText").GetComponent<Text> ();
+		scoreBreakText = GameObject.Find ("ScoreBreakText").GetComponent<Text> ();
+		zombieCountText = GameObject.Find ("ZombieCountText").GetComponent<Text>();
+		moveBreakText = GameObject.Find ("MoveBreakText").GetComponent<Text>();
 		levelText.text = "" + level;
-		ScoreBreakText.text = scoreBreakdown;
+		zombieCountText.text = "" + zombieKills;
+		moveBreakText.text = "" + moveCount;
+		scoreBreakText.text = scoreBreakdown;
 		levelImage.SetActive (true);
 		enemies.Clear ();
 		bodies.Clear ();
@@ -89,13 +87,13 @@ public class GameManager : MonoBehaviour {
 	public void HideLevelImage()
 	{
 		levelImage.SetActive (false);
-		ScoreBreakText.text = "";
+		scoreBreakText.text = "";
 		doingSetup = false;
 	}
 
 	public void Gameover()
 	{
-		ScoreBreakText.text = "Your score was " + playerScore;
+		scoreBreakText.text = "Your score was " + playerScore;
 		levelImage.SetActive (true);
 
 		enabled = false;
@@ -112,6 +110,19 @@ public class GameManager : MonoBehaviour {
 	{
 		tutImage.SetActive (false);
 		doingSetup = false;
+	}
+	// to be removed on control finalization
+	public void TutKeyboardHelper()
+	{
+		tutText.text = "Controls:\nArrow Keys to Rotate\nWASD to move\nSpace bar to attack\nH to dig a hole\nB to pick up a body\nB to place body in a hole";
+	}
+	public void TutXboxHelper()
+	{
+		tutText.text = "Controls:\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
+	}
+	public void TutPlayStationHelper()
+	{
+		tutText.text = "Controls:\n";
 	}
 
 	void Update()

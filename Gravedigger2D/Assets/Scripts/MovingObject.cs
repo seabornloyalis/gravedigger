@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class MovingObject : MonoBehaviour {
+public abstract class MovingObject : Pathfinder2D {
 
 	public float moveTime = 0.05f;
 	public LayerMask blockingLayer;

@@ -45,25 +45,6 @@ public class Player : MovingObject {
 		lookDir = new Vector2 (1.0f, 0.0f);
 		base.Start ();
 	}
-	/*
-	public void RestartButton()
-	{
-		Debug.Log ("STUFF\n");
-		health = 5;
-		count = 150;
-		digScore = 0;
-		lvlScore = 0;
-		isCarrying = "None";
-		carryText.text = "";
-		healthText.text = "Health: " + health;
-		scoreText.text = "Score: " + (lvlScore + digScore);
-		countText.text = "Turns Left: " + count;
-		lookDir = new Vector2 (1.0f, 0.0f);
-		GameManager.instance.RestartButton ();
-		//Invoke("Restart", restartLevelDelay);
-		Application.LoadLevel (0);
-	}
-	*/
 
 	public void ContinueButton()
 	{
@@ -79,6 +60,21 @@ public class Player : MovingObject {
 	{
 		GameManager.instance.CloseTutButtonHelper ();
 	}
+	// Will be removed when images/controls finalized
+	public void TutKeyboard()
+	{
+		GameManager.instance.TutKeyboardHelper ();
+	}
+	
+	public void TutXbox()
+	{
+		GameManager.instance.TutXboxHelper ();
+	}
+
+	public void TutPlayStation()
+	{
+		GameManager.instance.TutPlayStationHelper ();
+	}
 
 	private void OnDisable()
 	{
@@ -86,7 +82,8 @@ public class Player : MovingObject {
 		lvlScore += count;
 		GameManager.instance.playerlvlScore = lvlScore;
 		GameManager.instance.playerScore = digScore;
-		string s = "Score Breakdown:\n Buried zombies: " + digScore + "\n Leveling up: " + lvlScore;
+		int score = digScore+lvlScore;
+		string s = ""+score;
 		GameManager.instance.scoreBreakdown = s;
 	}
 	
@@ -222,6 +219,7 @@ public class Player : MovingObject {
 			audioSrc.Play();
 			isCarrying = "Body" + hit.transform.gameObject.GetComponent<Body>().bodyTypeID;
 			carryText.text = "You have a body";
+			GameManager.instance.zombieKills += 1;
 			hit.transform.gameObject.SetActive (false);
 			acted = true;
 			count--;
@@ -241,6 +239,7 @@ public class Player : MovingObject {
 			acted = true;
 		}
 		if (acted) {
+			GameManager.instance.moveCount += 1;
 			GameManager.instance.playersTurn = false;
 		}
 	}
