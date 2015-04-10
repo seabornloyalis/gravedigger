@@ -11,9 +11,12 @@ public class Enemy : MovingObject {
 	private bool grapple = false;
 	private Transform target;
 	private bool skipMove;
+	private AudioSource audioSrc;
+
 
 	protected override void Start () 
 	{
+		audioSrc = GetComponent<AudioSource> ();
 		GameManager.instance.AddEnemyToList (this);
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 
@@ -94,7 +97,8 @@ public class Enemy : MovingObject {
 			bonusMod = 2;
 
 		if (!grapple) {
-				hitPlayer.LoseHealth (playerDamage * bonusMod);
+			audioSrc.Play ();
+			hitPlayer.LoseHealth (playerDamage * bonusMod);
 		}
 		grapple = false;
 	}

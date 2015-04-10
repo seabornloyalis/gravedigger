@@ -13,6 +13,9 @@ public class Player : MovingObject {
 	public Text healthText;
 	public Text carryText;
 	public Text countText;
+	public AudioClip attackClip;
+	public AudioClip grunt;
+	public AudioClip shovelling;
 
 	public int health;
 	public int digScore;
@@ -23,10 +26,12 @@ public class Player : MovingObject {
 
 	private string isCarrying;
 	private GameObject damageImage;
+	private AudioSource audioSrc;
 
 	// Use this for initialization
 	protected override void Start ()
 	{
+		audioSrc = GetComponent<AudioSource> ();
 		health = GameManager.instance.playerHealth;
 		digScore = GameManager.instance.playerScore;
 		damageImage = GameObject.Find ("DamageImage");
@@ -141,6 +146,8 @@ public class Player : MovingObject {
 		if (hitEnemy.lookDir == lookDir)
 			bonusMod = 2;
 		hitEnemy.DamageEnemy (attackDamage * bonusMod);
+		audioSrc.clip = attackClip;
+		audioSrc.Play ();
 	}
 
 	private void Restart()
@@ -192,6 +199,8 @@ public class Player : MovingObject {
 
 		if(noObstacle && hit.transform == null && (Input.GetAxisRaw("Dig") != 0.0f))
 		{
+			audioSrc.clip = shovelling;
+			audioSrc.Play();
 			Dig(end);
 			acted = true;
 			count--;
@@ -209,6 +218,8 @@ public class Player : MovingObject {
 			acted = true;
 		}
 		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
+			audioSrc.clip = grunt;
+			audioSrc.Play();
 			isCarrying = "Body" + hit.transform.gameObject.GetComponent<Body>().bodyTypeID;
 			carryText.text = "You have a body";
 			hit.transform.gameObject.SetActive (false);
