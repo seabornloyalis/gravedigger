@@ -145,7 +145,7 @@ public class Player : MovingObject {
 		int vertical = (int)Input.GetAxisRaw ("Vertical");
 
 		if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
-			base.AttemptMove<Player> (xDir, yDir);
+			base.AttemptMove<Enemy> (xDir, yDir);
 			count--;
 			countText.text = "Turns Left: " + count;
 			CheckIfGameOver ();
