@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class MovingObject : MonoBehaviour {
+public abstract class MovingObject : D2Pathing {
 
 	public float moveTime = 0.05f;
 	public LayerMask blockingLayer;
@@ -9,29 +9,29 @@ public abstract class MovingObject : MonoBehaviour {
 	public Sprite back;
 	public Sprite leftSide;
 	public Sprite rightSide;
-	public Vector2 lookDir;
+	public Vector3 lookDir;
 
-	private BoxCollider2D boxCollider;
-	private Rigidbody2D rb2D;
+	private BoxCollider boxCollider;
+	private Rigidbody rb2D;
 	private float inverseMoveTime;
 	private SpriteRenderer spriteRenderer;
 
 	// Use this for initialization
 	protected virtual void Start ()
 	{
-		boxCollider = GetComponent<BoxCollider2D> ();
-		rb2D = GetComponent<Rigidbody2D> ();
+		boxCollider = GetComponent<BoxCollider> ();
+		rb2D = GetComponent<Rigidbody> ();
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		inverseMoveTime = 1f / moveTime;
 	}
 
-	protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
+	protected bool Move(int xDir, int yDir, out RaycastHit hit)
 	{
-		Vector2 start = transform.position;
-		Vector2 end = start + new Vector2 (xDir, yDir);
+		Vector3 start = new Vector3(transform.position.x, transform.position.y, 0f);
+		Vector3 end = start + new Vector3 (xDir, yDir, 0f);
 
 		boxCollider.enabled = false;
-		hit = Physics2D.Linecast (start, end, blockingLayer);
+		Physics.Linecast (start, end, out hit, blockingLayer);
 		boxCollider.enabled = true;
 
 		if (hit.transform == null) 
@@ -59,7 +59,7 @@ public abstract class MovingObject : MonoBehaviour {
 	protected virtual void AttemptMove<T> (int xDir, int yDir)
 		where T : Component
 	{
-		RaycastHit2D hit;
+		RaycastHit hit;
 		bool canMove = Move (xDir, yDir, out hit);
 
 		if(hit.transform == null)
@@ -77,7 +77,7 @@ public abstract class MovingObject : MonoBehaviour {
 	protected abstract void OnCantMove<T> (T component)
 		where T : Component;
 
-	public void RotateFacing (Vector2 newFacing) {
+	public void RotateFacing (Vector3 newFacing) {
 		lookDir = newFacing;
 		
 		/*if (back == null || leftSide == null || rightSide == null) {

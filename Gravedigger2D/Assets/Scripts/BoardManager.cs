@@ -27,7 +27,7 @@ public class BoardManager : MonoBehaviour
 	public GameObject outerWallTile;
 	public GameObject[] enemyTiles;
 	public GameObject cornTile;
-
+	
 	private Transform boardHolder;
 	private List<Vector3> gridPositions = new List<Vector3>();
 	
@@ -66,7 +66,7 @@ public class BoardManager : MonoBehaviour
 			}
 		}
 	}
-
+	
 	Vector3 RandomPosition()
 	{
 		int randomIndex = Random.Range(0, gridPositions.Count);

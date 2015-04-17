@@ -35,9 +35,6 @@ public class Player : MovingObject {
 		checkingMove = false;
 		audioSrc = GetComponent<AudioSource> ();
 		health = GameManager.instance.playerHealth;
-		if (health > 5) {
-			health = 5;
-		}
 		digScore = GameManager.instance.playerScore;
 		damageImage = GameObject.Find ("DamageImage");
 		damageImage.SetActive (false);
@@ -47,7 +44,7 @@ public class Player : MovingObject {
 		healthText.text = "Health: " + health;
 		scoreText.text = "Score: " + (lvlScore + digScore);
 		countText.text = "Turns Left: " + count;
-		lookDir = new Vector2 (1.0f, 0.0f);
+		lookDir = new Vector3 (1.0f, 0.0f, 0f);
 		base.Start ();
 	}
 
@@ -83,7 +80,7 @@ public class Player : MovingObject {
 
 	private void OnDisable()
 	{
-		GameManager.instance.playerHealth = health+1;
+		GameManager.instance.playerHealth = health;
 		lvlScore += count;
 		GameManager.instance.playerlvlScore = lvlScore;
 		GameManager.instance.playerScore = digScore;
@@ -205,9 +202,9 @@ public class Player : MovingObject {
 	private void Interact<T>()
 		where T : Component //Needed?
 	{
-		RaycastHit2D hit;
-		Vector2 start = transform.position;
-		Vector2 end = start + lookDir;
+		RaycastHit hit;
+		Vector3 start = transform.position;
+		Vector3 end = start + lookDir;
 		bool noObstacle = InteractWithGround (end, out hit);
 		bool acted = false;
 
@@ -262,13 +259,13 @@ public class Player : MovingObject {
 		}
 	}
 
-	private bool InteractWithGround(Vector2 end, out RaycastHit2D hit)
+	private bool InteractWithGround(Vector3 end, out RaycastHit hit)
 	{
-		Vector2 start = transform.position;
+		Vector3 start = new Vector3 (transform.position.x, transform.position.y, 0);
 
-		BoxCollider2D boxCollider = GetComponent<BoxCollider2D> ();
+		BoxCollider boxCollider = GetComponent<BoxCollider> ();
 		boxCollider.enabled = false;
-		hit = Physics2D.Linecast (start, end, blockingLayer);
+		Physics.Linecast (start, end, out hit, blockingLayer);
 		boxCollider.enabled = true;
 		
 		if (hit.transform == null) 

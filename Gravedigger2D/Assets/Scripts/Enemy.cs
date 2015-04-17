@@ -62,9 +62,6 @@ public class Enemy : MovingObject {
 
 	protected override void AttemptMove<T> (int xDir, int yDir)
 	{
-		if(Physics2D.Raycast(new Vector2(-1, -2), new Vector2(0, 1), 10)){
-			UnityEngine.Debug.Log ("STUFF\n");
-		}
 		if (skipMove)
 		{
 			skipMove = false;
@@ -80,6 +77,7 @@ public class Enemy : MovingObject {
 
 	public void MoveEnemy()
 	{
+
 		int xDir = 0;
 		int yDir = 0;
 
@@ -90,6 +88,7 @@ public class Enemy : MovingObject {
 		}
 
 		AttemptMove<Player> (xDir, yDir);
+
 	}
 
 	protected override void OnCantMove<T> (T component)
