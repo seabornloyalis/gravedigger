@@ -27,10 +27,12 @@ public class Player : MovingObject {
 	private string isCarrying;
 	private GameObject damageImage;
 	private AudioSource audioSrc;
+	private bool checkingMove;
 
 	// Use this for initialization
 	protected override void Start ()
 	{
+		checkingMove = false;
 		audioSrc = GetComponent<AudioSource> ();
 		health = GameManager.instance.playerHealth;
 		if (health > 5) {
@@ -130,13 +132,26 @@ public class Player : MovingObject {
 
 	protected override void AttemptMove<T> (int xDir, int yDir)
 	{
-		base.AttemptMove<T> (xDir, yDir);
-
 		RotateFacing (new Vector2(xDir, yDir));
-		count--;
-		countText.text = "Turns Left: " + count;
-		CheckIfGameOver ();
-		GameManager.instance.playersTurn = false;
+		if (!checkingMove) {
+			checkingMove = true;
+			StartCoroutine (MoveHelper (xDir, yDir));
+		}
+	}
+
+	private IEnumerator MoveHelper(int xDir, int yDir) {
+		yield return new WaitForSeconds (0.15f);
+		int horizontal = (int)Input.GetAxisRaw ("Horizontal");
+		int vertical = (int)Input.GetAxisRaw ("Vertical");
+
+		if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
+			base.AttemptMove<Enemy> (xDir, yDir);
+			count--;
+			countText.text = "Turns Left: " + count;
+			CheckIfGameOver ();
+			GameManager.instance.playersTurn = false;
+		}
+		checkingMove = false;
 	}
 
 	protected override void OnCantMove<T> (T component)
