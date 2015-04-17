@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	public float levelStartDelay = 2f;
 	public static GameManager instance = null;
 	public BoardManager boardScript;
+	public LayerMask blocking;
 	public AudioSource audioPlayer;
 	public List<AudioClip> songs;
 	public int playerHealth = 5;
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour {
 	private Text zombieCountText;
 	private Text moveBreakText;
 	private GameObject levelImage;
+	private GameObject playr;
 	private GameObject tutImage;
 	private Text tutText; // to be removed when controls finalized
 	private List<Enemy> enemies;
@@ -35,6 +37,10 @@ public class GameManager : MonoBehaviour {
 	private bool enemiesMoving;
 	private bool doingSetup;
 	private int currSongIndex = 0;
+	private bool[,] pathArray;
+	private int xval;
+	private int yval;
+
 
 	void Awake()
 	{
@@ -82,6 +88,52 @@ public class GameManager : MonoBehaviour {
 		enemies.Clear ();
 		bodies.Clear ();
 		boardScript.SetupScene(level);
+		playr = GameObject.Find ("Player");
+		InitPathArray (level);
+	}
+
+
+	private void InitPathArray(int level)
+	{
+
+		if (level < 12) {
+			xval = level + 4 + 2;
+			yval = level + 4 + 2;
+			pathArray = new bool[xval, yval];
+		} else {
+			xval = 16 + 2;
+			yval = 8 + 2;
+			pathArray = new bool[xval, yval];
+		}
+		FillPathArray ();
+	}
+
+	private void FillPathArray()
+	{
+		int count = 0;
+		int tempx;
+		int tempy;
+		for (int i =0; i < xval; i++) {
+			for (int j = 0; j < yval; j++) {
+				pathArray [i, j] = true;
+			}
+			RaycastHit2D[] hits = Physics2D.LinecastAll (new Vector2 (i-1, -2), new Vector2 (i-1, yval + 2), blocking);
+			foreach (RaycastHit2D h in hits) {
+				tempx = (int)Mathf.Floor(h.transform.position.x)+1;
+				tempy = (int)Mathf.Floor(h.transform.position.y)+1;
+				pathArray[(int)tempx,(int)tempy] = false;
+			}
+		}
+		tempx = (int)Mathf.Floor (playr.transform.position.x)+1;
+		tempy = (int)Mathf.Floor (playr.transform.position.y)+1;
+		pathArray[(int)tempx, (int)tempy] = true;
+		foreach (bool b in pathArray) {
+			if(b){
+				Debug.Log("HI " + count + "\n");
+				count++;
+			}
+		}
+
 	}
 
 	public void HideLevelImage()
@@ -118,11 +170,11 @@ public class GameManager : MonoBehaviour {
 	}
 	public void TutXboxHelper()
 	{
-		tutText.text = "Controls:\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
+		tutText.text = "Controls:\nLeft Joystick to move\nRight Joystick to Rotate\nA to pickup a body\nX to dig a hole\nB to attack";
 	}
 	public void TutPlayStationHelper()
 	{
-		tutText.text = "Controls:\nRotate with the Analog Stick\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
+		tutText.text = "Controls:\nRotate with the Right Joystick\nLeft Joystick to move\nSquare to pickup a body\nCircle to dig a hole\nX to attack";
 	}
 
 	void Update()

@@ -33,6 +33,9 @@ public class Player : MovingObject {
 	{
 		audioSrc = GetComponent<AudioSource> ();
 		health = GameManager.instance.playerHealth;
+		if (health > 5) {
+			health = 5;
+		}
 		digScore = GameManager.instance.playerScore;
 		damageImage = GameObject.Find ("DamageImage");
 		damageImage.SetActive (false);
@@ -78,7 +81,7 @@ public class Player : MovingObject {
 
 	private void OnDisable()
 	{
-		GameManager.instance.playerHealth = health;
+		GameManager.instance.playerHealth = health+1;
 		lvlScore += count;
 		GameManager.instance.playerlvlScore = lvlScore;
 		GameManager.instance.playerScore = digScore;
