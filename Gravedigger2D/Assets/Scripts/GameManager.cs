@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour {
 	public float levelStartDelay = 2f;
 	public static GameManager instance = null;
 	public BoardManager boardScript;
-	public GameObject pather;
 	public AudioSource audioPlayer;
 	public List<AudioClip> songs;
 	public int playerHealth = 5;
@@ -23,14 +22,13 @@ public class GameManager : MonoBehaviour {
 
 	[HideInInspector] public bool playersTurn = true;
 
-	private int level = 3;
+	private int level = 1;
 	private Text levelText;
 	private Text scoreBreakText;
 	private Text zombieCountText;
 	private Text moveBreakText;
 	private GameObject levelImage;
 	private GameObject tutImage;
-	private Pathfinder2D pathfind;
 	private Text tutText; // to be removed when controls finalized
 	private List<Enemy> enemies;
 	private List<Body> bodies;
@@ -84,7 +82,6 @@ public class GameManager : MonoBehaviour {
 		enemies.Clear ();
 		bodies.Clear ();
 		boardScript.SetupScene(level);
-		pathfind = Instantiate (pather, new Vector3 (0, 0, 0), Quaternion.identity) as Pathfinder2D;
 	}
 
 	public void HideLevelImage()

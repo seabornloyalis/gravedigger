@@ -160,8 +160,6 @@ public class BoardManager : MonoBehaviour
 	}
 	
 	bool BuildNearWalls(Vector3 loc, int levelRows, int levelColumns) {
-		int colsMid = levelColumns/2;
-		int rowsMid = levelRows/2;
 		if ( gridPositions.Contains (loc + new Vector3 (-1f, 0f, 0f)) &&
 		    gridPositions.Contains (loc + new Vector3 (-2f, 0, 0f)) &&
 		    gridPositions.Contains (loc + new Vector3 (-1f, 1, 0f)) &&

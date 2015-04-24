@@ -1,0 +1,234 @@
+fileFormatVersion: 2
+guid: be6310ed0e0ed5c41b92f3e266386553
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: barry-sprite1_0
+    21300002: barry-sprite1_1
+    21300004: barry-sprite1_2
+    21300006: barry-sprite1_3
+    21300008: barry-sprite1_4
+    21300010: barry-sprite1_5
+    21300012: barry-sprite1_6
+    21300014: barry-sprite1_7
+    21300016: barry-sprite1_8
+    21300018: barry-sprite1_9
+    21300020: barry-sprite1_10
+    21300022: barry-sprite1_11
+    21300024: barry-sprite1_12
+    21300026: barry-sprite1_13
+    21300028: barry-sprite1_14
+    21300030: barry-sprite1_15
+    21300032: barry-sprite1_16
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: barry-sprite1_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 7752
+        width: 720
+        height: 1088
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_1
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 7752
+        width: 720
+        height: 1079
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_2
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 6506
+        width: 719
+        height: 1088
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_3
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 6524
+        width: 720
+        height: 1079
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_4
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 5164
+        width: 386
+        height: 1088
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_5
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 5181
+        width: 387
+        height: 1071
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_6
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 5173
+        width: 386
+        height: 1079
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_7
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 4541
+        width: 641
+        height: 421
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_8
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 4532
+        width: 667
+        height: 509
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_9
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 3970
+        width: 763
+        height: 413
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_10
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 3865
+        width: 728
+        height: 474
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_11
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 3049
+        width: 536
+        height: 772
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_12
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 1373
+        width: 720
+        height: 1086
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_13
+      rect:
+        serializedVersion: 2
+        x: 821
+        y: 1391
+        width: 719
+        height: 1070
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_14
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 48
+        width: 395
+        height: 1071
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_15
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 57
+        width: 386
+        height: 1070
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: barry-sprite1_16
+      rect:
+        serializedVersion: 2
+        x: 1101
+        y: 92
+        width: 395
+        height: 1035
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

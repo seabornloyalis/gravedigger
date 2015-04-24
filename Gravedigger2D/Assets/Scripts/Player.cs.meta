@@ -3,7 +3,19 @@ guid: ec8f6f6a585ff944e8f7651fe1efa2b5
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
+  - front: {fileID: 21300000, guid: be6310ed0e0ed5c41b92f3e266386553, type: 3}
+  - back: {fileID: 21300002, guid: be6310ed0e0ed5c41b92f3e266386553, type: 3}
+  - leftSide: {fileID: 21300012, guid: be6310ed0e0ed5c41b92f3e266386553, type: 3}
+  - rightSide: {fileID: 21300028, guid: be6310ed0e0ed5c41b92f3e266386553, type: 3}
+  - scoreText: {instanceID: 0}
+  - healthText: {instanceID: 0}
+  - carryText: {instanceID: 0}
+  - countText: {instanceID: 0}
+  - attackClip: {instanceID: 0}
+  - grunt: {instanceID: 0}
+  - shovelling: {instanceID: 0}
   - hole: {fileID: 106646, guid: e9021ed7410a5e64283c1647d29dc567, type: 2}
+  - gravemarker: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

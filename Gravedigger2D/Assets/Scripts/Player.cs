@@ -143,7 +143,7 @@ public class Player : MovingObject {
 			int horizontal = (int)Input.GetAxisRaw ("Horizontal");
 			int vertical = (int)Input.GetAxisRaw ("Vertical");
 
-<<<<<<< HEAD
+
 		if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
 			base.AttemptMove<Enemy> (xDir, yDir);
 			count--;
@@ -152,7 +152,7 @@ public class Player : MovingObject {
 			GameManager.instance.playersTurn = false;
 		}
 		checkingMove = false;
-=======
+
 			if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
 				base.AttemptMove<Player> (xDir, yDir);
 				count--;
@@ -161,7 +161,7 @@ public class Player : MovingObject {
 				GameManager.instance.playersTurn = false;
 			}
 			checkingMove = false;
->>>>>>> 25236d1ba76b90dbafe64205a7fdc2d0b5d73874
+
 	}
 
 	protected override void OnCantMove<T> (T component)
@@ -295,7 +295,7 @@ public class Player : MovingObject {
 	private void Attack<T> () 
 		where T : Component
 	{
-		RaycastHit2D hit;
+		RaycastHit hit;
 		bool canMove = Move ((int)lookDir.x, (int)lookDir.y, out hit);
 		
 		if(hit.transform == null)

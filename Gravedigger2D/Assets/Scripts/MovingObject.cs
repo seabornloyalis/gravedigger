@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class MovingObject : D2Pathing {
+public abstract class MovingObject : MonoBehaviour {
 
 	public float moveTime = 0.05f;
 	public LayerMask blockingLayer;
