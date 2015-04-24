@@ -132,7 +132,9 @@ public class Player : MovingObject {
 
 	protected override void AttemptMove<T> (int xDir, int yDir)
 	{
+
 		RotateFacing (new Vector2(xDir, yDir));
+
 		if (!checkingMove) {
 			checkingMove = true;
 			StartCoroutine (MoveHelper (xDir, yDir));
@@ -140,18 +142,18 @@ public class Player : MovingObject {
 	}
 
 	private IEnumerator MoveHelper(int xDir, int yDir) {
-		yield return new WaitForSeconds (0.15f);
-		int horizontal = (int)Input.GetAxisRaw ("Horizontal");
-		int vertical = (int)Input.GetAxisRaw ("Vertical");
+			yield return new WaitForSeconds (0.15f);
+			int horizontal = (int)Input.GetAxisRaw ("Horizontal");
+			int vertical = (int)Input.GetAxisRaw ("Vertical");
 
-		if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
-			base.AttemptMove<Player> (xDir, yDir);
-			count--;
-			countText.text = "Turns Left: " + count;
-			CheckIfGameOver ();
-			GameManager.instance.playersTurn = false;
-		}
-		checkingMove = false;
+			if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
+				base.AttemptMove<Player> (xDir, yDir);
+				count--;
+				countText.text = "Turns Left: " + count;
+				CheckIfGameOver ();
+				GameManager.instance.playersTurn = false;
+			}
+			checkingMove = false;
 	}
 
 	protected override void OnCantMove<T> (T component)
@@ -229,7 +231,7 @@ public class Player : MovingObject {
 		}
 
 		if (hit.transform.tag == "Enemy" && (Input.GetAxisRaw ("Attack") != 0.0f)) {
-			AttemptMove<Enemy> ((int)lookDir.x, (int)lookDir.y);
+			Attack<Enemy>();
 			acted = true;
 		}
 		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
@@ -280,5 +282,23 @@ public class Player : MovingObject {
 
 	private void Dig (Vector2 digLoc) {
 		Instantiate(hole, new Vector3(digLoc.x, digLoc.y, 0f), Quaternion.identity);
+	}
+
+	private void Attack<T> () 
+		where T : Component
+	{
+		RaycastHit2D hit;
+		bool canMove = Move ((int)lookDir.x, (int)lookDir.y, out hit);
+		
+		if(hit.transform == null)
+		{
+			return;
+		}
+		T hitComponent = hit.transform.GetComponent<T>();
+		
+		if(!canMove && hitComponent != null)
+		{
+			OnCantMove(hitComponent);
+		}
 	}
 }
