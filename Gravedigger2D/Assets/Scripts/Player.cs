@@ -27,6 +27,7 @@ public class Player : MovingObject {
 	private string isCarrying;
 	private GameObject damageImage;
 	private AudioSource audioSrc;
+	private Animator anim;
 	private bool checkingMove;
 
 	// Use this for initialization
@@ -34,6 +35,7 @@ public class Player : MovingObject {
 	{
 		checkingMove = false;
 		audioSrc = GetComponent<AudioSource> ();
+		anim = GetComponent<Animator> ();
 		health = GameManager.instance.playerHealth;
 		digScore = GameManager.instance.playerScore;
 		damageImage = GameObject.Find ("DamageImage");
@@ -138,6 +140,23 @@ public class Player : MovingObject {
 		}
 	}
 
+	public override void RotateFacing(Vector3 newFacing) {
+		anim.SetBool("UpFace", false);
+		anim.SetBool("LeftFace", false);
+		anim.SetBool("DownFace", false);
+		anim.SetBool("RightFace", false);
+		if (lookDir.y == 1.0f) {
+			anim.SetBool("UpFace", true);
+		} else if (lookDir.x == -1.0f) {
+			anim.SetBool("LeftFace", true);
+		} else if (lookDir.y == -1.0f) {
+			anim.SetBool("DownFace", true);
+		} else if (lookDir.x == 1 && rightSide != null) {
+			anim.SetBool("RightFace", true);
+		}
+		base.RotateFacing (newFacing);
+	}
+
 	private IEnumerator MoveHelper(int xDir, int yDir) {
 			yield return new WaitForSeconds (0.15f);
 			int horizontal = (int)Input.GetAxisRaw ("Horizontal");
@@ -145,6 +164,7 @@ public class Player : MovingObject {
 
 
 		if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
+			anim.SetTrigger("StartWalk");
 			base.AttemptMove<Enemy> (xDir, yDir);
 			count--;
 			countText.text = "Turns Left: " + count;
@@ -152,7 +172,7 @@ public class Player : MovingObject {
 			GameManager.instance.playersTurn = false;
 		}
 		checkingMove = false;
-
+/*
 			if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
 				base.AttemptMove<Player> (xDir, yDir);
 				count--;
@@ -161,7 +181,7 @@ public class Player : MovingObject {
 				GameManager.instance.playersTurn = false;
 			}
 			checkingMove = false;
-
+*/
 	}
 
 	protected override void OnCantMove<T> (T component)

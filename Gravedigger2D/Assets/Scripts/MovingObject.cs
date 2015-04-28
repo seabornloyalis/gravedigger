@@ -77,14 +77,9 @@ public abstract class MovingObject : MonoBehaviour {
 	protected abstract void OnCantMove<T> (T component)
 		where T : Component;
 
-	public void RotateFacing (Vector3 newFacing) {
+	public virtual void RotateFacing (Vector3 newFacing) {
 		lookDir = newFacing;
-		
-		/*if (back == null || leftSide == null || rightSide == null) {
-			while (transform.rotation.z > 0.0f) {
-				transform.Rotate (0.0f, 0.0f, -90.0f);
-			}
-		}*/
+
 		if (lookDir.y == 1.0f) {
 			if (back != null)
 				spriteRenderer.sprite = back;
