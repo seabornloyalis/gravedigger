@@ -1,0 +1,146 @@
+fileFormatVersion: 2
+guid: aa3f37972a8c39047a54ff1c1267f662
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: maybeSprites_0
+    21300002: maybeSprites_1
+    21300004: maybeSprites_2
+    21300006: maybeSprites_3
+    21300008: maybeSprites_4
+    21300010: maybeSprites_5
+    21300012: maybeSprites_6
+    21300014: maybeSprites_7
+    21300016: maybeSprites_8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: maybeSprites_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 931
+        width: 232
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: maybeSprites_1
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 929
+        width: 283
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: maybeSprites_2
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 931
+        width: 321
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: maybeSprites_3
+      rect:
+        serializedVersion: 2
+        x: 1148
+        y: 926
+        width: 200
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: maybeSprites_4
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 562
+        width: 236
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: maybeSprites_5
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 565
+        width: 253
+        height: 358
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: maybeSprites_6
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 565
+        width: 290
+        height: 358
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: maybeSprites_7
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 520
+        width: 286
+        height: 398
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: maybeSprites_8
+      rect:
+        serializedVersion: 2
+        x: 1169
+        y: 494
+        width: 280
+        height: 424
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
