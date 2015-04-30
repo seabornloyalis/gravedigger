@@ -217,7 +217,34 @@ public class Player : MovingObject {
 
 	private void CheckIfGameOver()
 	{
-		if (health <= 0 || count <= 0) {
+		RaycastHit hit;
+		bool adjHole = false;
+		bool trapped = false;
+		Vector3 start = new Vector3 (transform.position.x, transform.position.y, 0);
+		//Checks 4 directions for obstacles
+		Physics.Linecast (start, start + new Vector3(1, 0, 0), out hit, blockingLayer);
+		if (hit.transform != null && hit.transform.tag == "Hole")
+			adjHole = true;
+		if (hit.transform != null && hit.transform.tag != "Enemy") {
+			Physics.Linecast (start, start + new Vector3(-1, 0, 0), out hit, blockingLayer);
+			if (hit.transform != null && hit.transform.tag == "Hole")
+				adjHole = true;
+			if (hit.transform != null && hit.transform.tag != "Enemy") {
+				Physics.Linecast (start, start + new Vector3(0, 1, 0), out hit, blockingLayer);
+				if (hit.transform != null && hit.transform.tag == "Hole")
+					adjHole = true;
+				if (hit.transform != null && hit.transform.tag != "Enemy") {
+					Physics.Linecast (start, start + new Vector3(0, -1, 0), out hit, blockingLayer);
+					if (hit.transform != null && hit.transform.tag == "Hole")
+						adjHole = true;
+					if (hit.transform != null && hit.transform.tag != "Enemy") {
+						if (adjHole == false || !isCarrying.Contains("Body"))
+							trapped = true;
+					}
+				}
+			}
+		}
+		if (health <= 0 || count <= 0 || trapped) {
 			GameManager.instance.playerScore = digScore;
 			GameManager.instance.playerlvlScore = lvlScore;
 	 		GameManager.instance.Gameover ();
