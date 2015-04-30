@@ -12,11 +12,13 @@ public class Enemy : MovingObject {
 	private Transform target;
 	private bool skipMove;
 	private AudioSource audioSrc;
+	private Animator anim;
 
 
 	protected override void Start () 
 	{
 		audioSrc = GetComponent<AudioSource> ();
+		anim = GetComponent<Animator> ();
 		GameManager.instance.AddEnemyToList (this);
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 
@@ -67,12 +69,29 @@ public class Enemy : MovingObject {
 			skipMove = false;
 			return;
 		}
-
-		base.AttemptMove<T> (xDir, yDir);
-
 		RotateFacing (new Vector2 (xDir, yDir));
-
+		base.AttemptMove<T> (xDir, yDir);
+		anim.SetTrigger ("Start");
+		
 		skipMove = true;
+	}
+
+	public override void RotateFacing(Vector3 newFacing) {
+		lookDir = newFacing;
+		anim.SetBool("Up", false);
+		anim.SetBool("Left", false);
+		anim.SetBool("Down", false);
+		anim.SetBool("Right", false);
+		if (lookDir.y == 1.0f) {
+			anim.SetBool("Up", true);
+		} else if (lookDir.x == -1.0f) {
+			anim.SetBool("Left", true);
+		} else if (lookDir.y == -1.0f) {
+			anim.SetBool("Down", true);
+		} else if (lookDir.x == 1) {
+			anim.SetBool("Right", true);
+		}
+		base.RotateFacing (newFacing);
 	}
 
 	public void MoveEnemy()

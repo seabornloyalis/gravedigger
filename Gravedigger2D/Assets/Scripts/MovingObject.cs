@@ -81,24 +81,24 @@ public abstract class MovingObject : MonoBehaviour {
 		lookDir = newFacing;
 
 		if (lookDir.y == 1.0f) {
-			if (back != null)
+			//if (back != null)
 				spriteRenderer.sprite = back;
-			else
-				transform.Rotate (0.0f, 0.0f, 90.0f);
+			//else
+			//	transform.Rotate (0.0f, 0.0f, 90.0f);
 		} else if (lookDir.x == -1.0f) {
-			if (leftSide != null)
+			//if (leftSide != null)
 				spriteRenderer.sprite = leftSide;
-			else {
+			/*else {
 				transform.Rotate (0.0f, 0.0f, 90.0f);
 				transform.Rotate (0.0f, 0.0f, 90.0f);
-			}
+			}*/
 		} else if (lookDir.y == -1.0f) {
-			if (front != null)
+			//if (front != null)
 				spriteRenderer.sprite = front;
-			else
+			//else
 			 //Commented out until other facings implemented*/ 
-				transform.Rotate (0.0f, 0.0f, 270.0f);
-		} else if (lookDir.x == 1 && rightSide != null) {
+			//	transform.Rotate (0.0f, 0.0f, 270.0f);
+		} else if (lookDir.x == 1) {
 			spriteRenderer.sprite = rightSide;
 		}
 	}
