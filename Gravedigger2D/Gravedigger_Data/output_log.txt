@@ -10,17 +10,55 @@ Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Grav
 Loading C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
 Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.070 seconds
+- Completed reload, in  0.060 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Chad\Documents\GitHub\gravedigger\Gravedigger2D\Gravedigger_Data\Managed\System.dll (this message is harmless)
-UnloadTime: 2.847093 ms
+UnloadTime: 9.435054 ms
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 219.
-Total: 1.401832 ms (FindLiveObjects: 0.018211 ms CreateObjectMapping: 0.017744 ms MarkObjects: 0.264769 ms  DeleteObjects: 0.007004 ms)
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 483.
+Total: 2.739224 ms (FindLiveObjects: 0.049498 ms CreateObjectMapping: 0.035022 ms MarkObjects: 0.700449 ms  DeleteObjects: 0.013542 ms)
+
+UnloadTime: 1.084295 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 483.
+Total: 0.771428 ms (FindLiveObjects: 0.014475 ms CreateObjectMapping: 0.011207 ms MarkObjects: 0.245157 ms  DeleteObjects: 0.003735 ms)
+
+UnloadTime: 4.031787 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 483.
+Total: 2.507609 ms (FindLiveObjects: 0.048564 ms CreateObjectMapping: 0.035956 ms MarkObjects: 0.694378 ms  DeleteObjects: 0.013542 ms)
+
+UnloadTime: 5.130092 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 483.
+Total: 2.591196 ms (FindLiveObjects: 0.050899 ms CreateObjectMapping: 0.035956 ms MarkObjects: 0.719595 ms  DeleteObjects: 0.013075 ms)
+
+UnloadTime: 5.349566 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 483.
+Total: 2.636491 ms (FindLiveObjects: 0.050432 ms CreateObjectMapping: 0.038291 ms MarkObjects: 0.809252 ms  DeleteObjects: 0.014008 ms)
+
+UnloadTime: 6.442267 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 483.
+Total: 2.589328 ms (FindLiveObjects: 0.049498 ms CreateObjectMapping: 0.036890 ms MarkObjects: 0.745745 ms  DeleteObjects: 0.013075 ms)
+
+UnloadTime: 7.035314 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 483.
+Total: 2.627619 ms (FindLiveObjects: 0.048564 ms CreateObjectMapping: 0.036890 ms MarkObjects: 0.793842 ms  DeleteObjects: 0.013075 ms)
 

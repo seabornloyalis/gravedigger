@@ -24,7 +24,9 @@ public class BoardManager : MonoBehaviour
 	public Count obstacleCount = new Count(5, 7);
 	public GameObject[] floorTiles; // all arrays for easy change later if/when we have multiple of each
 	public GameObject[] obstacleTiles;
-	public GameObject outerWallTile;
+	public GameObject outerWallTileTop;
+	public GameObject outerWallTileSide;
+	public GameObject outerWallTileCorner;
 	public GameObject[] enemyTiles;
 	public GameObject cornTile;
 	
@@ -55,9 +57,16 @@ public class BoardManager : MonoBehaviour
 			for(int y = -1; y < levelRows + 1; y++)
 			{
 				GameObject toInstantiate = floorTiles[Random.Range (0, floorTiles.Length)];
-				if (x == -1 || x == levelColumns || y == -1 || y == levelRows)
+				if ((x == -1 || x == levelColumns) && (y == -1 || y == levelRows)) {
+					toInstantiate = outerWallTileCorner;
+				}
+				else if (x == -1 || x == levelColumns)
 				{
-					toInstantiate = outerWallTile;
+					toInstantiate = outerWallTileSide;
+				}
+				else if (y == -1 || y == levelRows)
+				{
+					toInstantiate = outerWallTileTop;
 				}
 				
 				GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;

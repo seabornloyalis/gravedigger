@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class Player : MovingObject {
@@ -21,7 +22,7 @@ public class Player : MovingObject {
 	public int digScore;
 	public int lvlScore;
 	public int count = 150;
-	public GameObject hole;
+	public List<GameObject> hole;
 	public GameObject gravemarker;
 
 	private string isCarrying;
@@ -33,6 +34,7 @@ public class Player : MovingObject {
 	// Use this for initialization
 	protected override void Start ()
 	{
+		//hole = new List<GameObject> ();
 		checkingMove = false;
 		audioSrc = GetComponent<AudioSource> ();
 		anim = GetComponent<Animator> ();
@@ -339,7 +341,8 @@ public class Player : MovingObject {
 	}
 
 	private void Dig (Vector2 digLoc) {
-		Instantiate(hole, new Vector3(digLoc.x, digLoc.y, 0f), Quaternion.identity);
+		int rand = Random.Range (0, 2);
+		Instantiate(hole[rand], new Vector3(digLoc.x, digLoc.y, 0f), Quaternion.identity);
 	}
 
 	private void Attack<T> () 
