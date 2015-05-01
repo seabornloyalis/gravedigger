@@ -228,19 +228,19 @@ public class Player : MovingObject {
 		Physics.Linecast (start, start + new Vector3(1, 0, 0), out hit, blockingLayer);
 		if (hit.transform != null && hit.transform.tag == "Hole")
 			adjHole = true;
-		if (hit.transform != null && hit.transform.tag != "Enemy") {
+		if (hit.transform != null && hit.transform.tag != "Enemy" && hit.transform.tag != "Body") {
 			Physics.Linecast (start, start + new Vector3(-1, 0, 0), out hit, blockingLayer);
 			if (hit.transform != null && hit.transform.tag == "Hole")
 				adjHole = true;
-			if (hit.transform != null && hit.transform.tag != "Enemy") {
+			if (hit.transform != null && hit.transform.tag != "Enemy" && hit.transform.tag != "Body") {
 				Physics.Linecast (start, start + new Vector3(0, 1, 0), out hit, blockingLayer);
 				if (hit.transform != null && hit.transform.tag == "Hole")
 					adjHole = true;
-				if (hit.transform != null && hit.transform.tag != "Enemy") {
+				if (hit.transform != null && hit.transform.tag != "Enemy" && hit.transform.tag != "Body") {
 					Physics.Linecast (start, start + new Vector3(0, -1, 0), out hit, blockingLayer);
 					if (hit.transform != null && hit.transform.tag == "Hole")
 						adjHole = true;
-					if (hit.transform != null && hit.transform.tag != "Enemy") {
+					if (hit.transform != null && hit.transform.tag != "Enemy" && hit.transform.tag != "Body") {
 						if (adjHole == false || !isCarrying.Contains("Body"))
 							trapped = true;
 					}
