@@ -170,6 +170,7 @@ public class Player : MovingObject {
 			countText.text = "Turns Left: " + count;
 			CheckIfGameOver ();
 			GameManager.instance.playersTurn = false;
+			//anim.SetTrigger("StartWalk");
 		}
 		checkingMove = false;
 /*
@@ -286,8 +287,10 @@ public class Player : MovingObject {
 		}
 
 		if (hit.transform.tag == "Enemy" && (Input.GetAxisRaw ("Attack") != 0.0f)) {
+			anim.SetTrigger("Attack");
 			Attack<Enemy>();
 			acted = true;
+			//anim.SetTrigger ("Attack");
 		}
 		if (hit.transform.tag == "Body" && isCarrying == "None" && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
 			audioSrc.clip = grunt;
