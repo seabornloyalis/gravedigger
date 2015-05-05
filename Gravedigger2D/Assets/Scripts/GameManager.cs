@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
 	public int numEnemies;
 	public int numBodies;
 	public string scoreBreakdown;
+	public bool passedLvl = false;
 
 	[HideInInspector] public bool playersTurn = true;
 
@@ -59,9 +60,11 @@ public class GameManager : MonoBehaviour {
 	
 	private void OnLevelWasLoaded(int index)
 	{
-		level++;
-
-		InitGame ();
+		if (passedLvl) {
+			level++;
+			Debug.Log ("Init new game");
+			InitGame ();
+		}
 	}
 
 	void InitGame()
@@ -82,6 +85,8 @@ public class GameManager : MonoBehaviour {
 		enemies.Clear ();
 		bodies.Clear ();
 		boardScript.SetupScene(level);
+		passedLvl = false;
+		Debug.Log ("Init'd");
 	}
 
 	public void HideLevelImage()
@@ -97,6 +102,9 @@ public class GameManager : MonoBehaviour {
 		levelImage.SetActive (true);
 
 		enabled = false;
+		Application.LoadLevel ("TitleScreen");
+		//dead = true;
+		//this.Destroy (this, 0.0f);
 	}
 
 	public void TutorialButtonHelper()

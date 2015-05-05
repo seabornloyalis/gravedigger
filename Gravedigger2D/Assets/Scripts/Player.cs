@@ -258,6 +258,8 @@ public class Player : MovingObject {
 	{
 		if (GameManager.instance.numEnemies == 0 
 		    && GameManager.instance.numBodies == 0) {
+			GameManager.instance.passedLvl = true;
+			Debug.Log("checkingnext");
 			Invoke("Restart", restartLevelDelay);
 		}
 	}
