@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public class QuoteManager : MonoBehaviour {
 
-	public static QuoteManager instance;
+	public static QuoteManager instance = null;
 	string[] ingameQuotes = {
 		"Barry'd alive",
 		"We will Barry you -Khrushchev",

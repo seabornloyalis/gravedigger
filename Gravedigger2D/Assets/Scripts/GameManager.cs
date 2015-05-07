@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	public int numEnemies;
 	public int numBodies;
 	public string scoreBreakdown;
-	public bool passedLvl = false;
+	public int passedLvl = 0;
 	public bool showingLevel = false;
 	public List<Sprite> effects;
 	public QuoteManager QM;
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour {
 	
 	private void OnLevelWasLoaded(int index)
 	{
-		if (passedLvl) {
+		if (passedLvl > 0) {
 			level++;
 			InitGame ();
 		}
@@ -72,15 +72,18 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame()
 	{
+		if (level != 1) {
+			Destroy (GameObject.Find ("Board1"));
+			Destroy(GameObject.Find("EnemyStg1(Clone)"));
+		} //Hacky shit to fix mysterious and gamebreaking bug
 		doingSetup = true;
 		levelImage = GameObject.Find ("LevelImage");
 		tutImage = GameObject.Find ("TutorialImage");
-		tutText = GameObject.Find ("TutText").GetComponent<Text>();
+		tutText = GameObject.Find ("TutText").GetComponent<Text> ();
 		levelText = GameObject.Find ("LevelText").GetComponent<Text> ();
 		scoreBreakText = GameObject.Find ("ScoreBreakText").GetComponent<Text> ();
-		zombieCountText = GameObject.Find ("ZombieCountText").GetComponent<Text>();
-		moveBreakText = GameObject.Find ("MoveBreakText").GetComponent<Text>();
-		GameObject.Find ("Quote").GetComponent<Text> ().text = QuoteManager.instance.randLevelQuote ();
+		zombieCountText = GameObject.Find ("ZombieCountText").GetComponent<Text> ();
+		moveBreakText = GameObject.Find ("MoveBreakText").GetComponent<Text> ();
 		levelText.text = "" + level;
 		zombieCountText.text = "" + zombieKills;
 		moveBreakText.text = "" + moveCount;
@@ -88,9 +91,12 @@ public class GameManager : MonoBehaviour {
 		levelImage.SetActive (true);
 		enemies.Clear ();
 		bodies.Clear ();
-		boardScript.SetupScene(level);
-		passedLvl = false;
+		boardScript.SetupScene (level);
+		passedLvl = level-1;
 		showingLevel = false;
+		if (level % 2 == 0 && level > 2) {
+			playerHealth +=1;
+		}
 	}
 
 	public void HideLevelImage()
@@ -138,6 +144,8 @@ public class GameManager : MonoBehaviour {
 	void Update()
 	{
 		if (!showingLevel) {
+			if (GameObject.Find ("Quote").GetComponent<Text> ().text == "")
+				GameObject.Find ("Quote").GetComponent<Text> ().text = QuoteManager.instance.randLevelQuote ();
 			if(Input.anyKey) {
 				GameObject.Find("Player").GetComponent<Player>().ContinueButton();
 				GameObject.Find("Player").GetComponent<Player>().CloseTutButton();
@@ -224,5 +232,9 @@ public class GameManager : MonoBehaviour {
 		int rand = Random.Range(0, effects.Count);
 		GameObject.Find ("AttackFX").GetComponent<SpriteRenderer> ().sprite = effects[rand];
 		GameObject.Find ("AttackFX").GetComponent<Transform> ().position = enemies[currEnemy].transform.position;
+	}
+
+	public int getLevel() {
+		return level;
 	}
 }

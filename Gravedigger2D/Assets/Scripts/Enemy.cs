@@ -122,7 +122,7 @@ public class Enemy : MovingObject {
 			GameManager.instance.displayFX();
 			audioSrc.Play ();
 			hitPlayer.LoseHealth (playerDamage * bonusMod);
-			Invoke("hideFX", 0.4f);
+			Invoke("hideFX", 0.6f);
 		}
 		grapple = false;
 	}

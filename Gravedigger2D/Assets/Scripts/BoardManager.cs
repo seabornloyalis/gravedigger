@@ -51,7 +51,7 @@ public class BoardManager : MonoBehaviour
 	
 	void BoardSetup(int levelRows, int levelColumns)
 	{
-		boardHolder = new GameObject ("Board").transform;
+		boardHolder = new GameObject ("Board"+(levelRows-rows)).transform;
 		for(int x = -1; x < levelColumns + 1; x++)
 		{
 			for(int y = -1; y < levelRows + 1; y++)

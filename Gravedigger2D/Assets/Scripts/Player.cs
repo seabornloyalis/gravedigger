@@ -34,7 +34,6 @@ public class Player : MovingObject {
 	// Use this for initialization
 	protected override void Start ()
 	{
-		//hole = new List<GameObject> ();
 		checkingMove = false;
 		audioSrc = GetComponent<AudioSource> ();
 		anim = GetComponent<Animator> ();
@@ -248,7 +247,7 @@ public class Player : MovingObject {
 	{
 		if (GameManager.instance.numEnemies == 0 
 		    && GameManager.instance.numBodies == 0) {
-			GameManager.instance.passedLvl = true;
+			GameManager.instance.passedLvl = GameManager.instance.getLevel();
 			Invoke("Restart", restartLevelDelay);
 		}
 	}
