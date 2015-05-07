@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
 	public int numBodies;
 	public string scoreBreakdown;
 	public bool passedLvl = false;
+	public bool showingLevel = false;
 
 	[HideInInspector] public bool playersTurn = true;
 
@@ -62,7 +63,6 @@ public class GameManager : MonoBehaviour {
 	{
 		if (passedLvl) {
 			level++;
-			Debug.Log ("Init new game");
 			InitGame ();
 		}
 	}
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour {
 		bodies.Clear ();
 		boardScript.SetupScene(level);
 		passedLvl = false;
-		Debug.Log ("Init'd");
+		showingLevel = false;
 	}
 
 	public void HideLevelImage()
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
 		levelImage.SetActive (true);
 
 		enabled = false;
-		Application.LoadLevel ("TitleScreen");
+		Application.LoadLevel ("DeathScreen");
 		//dead = true;
 		//this.Destroy (this, 0.0f);
 	}
@@ -135,6 +135,14 @@ public class GameManager : MonoBehaviour {
 
 	void Update()
 	{
+		if (!showingLevel) {
+			if(Input.anyKey) {
+				GameObject.Find("Player").GetComponent<Player>().ContinueButton();
+				GameObject.Find("Player").GetComponent<Player>().CloseTutButton();
+				Input.ResetInputAxes();
+				return;
+			}
+		}
 		if (audioPlayer.isPlaying == false) {
 			audioPlayer.clip = songs[(currSongIndex + 1) % songs.Count];
 			audioPlayer.Play();

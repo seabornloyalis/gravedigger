@@ -55,6 +55,7 @@ public class Player : MovingObject {
 	public void ContinueButton()
 	{
 		GameManager.instance.HideLevelImage ();
+		GameManager.instance.showingLevel = true;
 	}
 
 	public void TutorialButton()
@@ -96,7 +97,7 @@ public class Player : MovingObject {
 	// Update is called once per frame
 	void Update ()
 	{
-		if (!GameManager.instance.playersTurn)
+		if (!GameManager.instance.playersTurn || !GameManager.instance.showingLevel)
 		{
 			return;
 		}
@@ -259,7 +260,6 @@ public class Player : MovingObject {
 		if (GameManager.instance.numEnemies == 0 
 		    && GameManager.instance.numBodies == 0) {
 			GameManager.instance.passedLvl = true;
-			Debug.Log("checkingnext");
 			Invoke("Restart", restartLevelDelay);
 		}
 	}
