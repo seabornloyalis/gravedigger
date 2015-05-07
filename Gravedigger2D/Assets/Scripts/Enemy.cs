@@ -66,13 +66,14 @@ public class Enemy : MovingObject {
 	{
 		if (skipMove)
 		{
+			this.GetComponent<SpriteRenderer>().color = new Color(1f, 0.5f, 0.5f);
 			skipMove = false;
 			return;
 		}
 		RotateFacing (new Vector2 (xDir, yDir));
 		base.AttemptMove<T> (xDir, yDir);
 		anim.SetTrigger ("Start");
-		
+		this.GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f);
 		skipMove = true;
 	}
 
@@ -118,10 +119,15 @@ public class Enemy : MovingObject {
 			bonusMod = 2;
 
 		if (!grapple) {
+			GameManager.instance.displayFX();
 			audioSrc.Play ();
 			hitPlayer.LoseHealth (playerDamage * bonusMod);
+			Invoke("hideFX", 0.4f);
 		}
 		grapple = false;
 	}
 
+	void hideFX() {
+		GameObject.Find ("AttackFX").GetComponent<SpriteRenderer> ().enabled = false;
+	}
 }

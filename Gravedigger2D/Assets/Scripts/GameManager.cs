@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour {
 	public string scoreBreakdown;
 	public bool passedLvl = false;
 	public bool showingLevel = false;
+	public List<Sprite> effects;
+	public QuoteManager QM;
 
 	[HideInInspector] public bool playersTurn = true;
 
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour {
 	private bool enemiesMoving;
 	private bool doingSetup;
 	private int currSongIndex = 0;
+	private int currEnemy = 0;
 
 	void Awake()
 	{
@@ -104,8 +107,6 @@ public class GameManager : MonoBehaviour {
 
 		enabled = false;
 		Application.LoadLevel ("DeathScreen");
-		//dead = true;
-		//this.Destroy (this, 0.0f);
 	}
 
 	public void TutorialButtonHelper()
@@ -208,6 +209,7 @@ public class GameManager : MonoBehaviour {
 
 		for (int i = 0; i < enemies.Count; i++) 
 		{
+			currEnemy = i;
 			enemies[i].MoveEnemy();
 			yield return new WaitForSeconds(enemies[i].moveTime);
 		}
@@ -218,6 +220,9 @@ public class GameManager : MonoBehaviour {
 		enemiesMoving = false;
 	}
 
-
-
+	public void displayFX() {
+		int rand = Random.Range(0, effects.Count);
+		GameObject.Find ("AttackFX").GetComponent<SpriteRenderer> ().sprite = effects[rand];
+		GameObject.Find ("AttackFX").GetComponent<Transform> ().position = enemies[currEnemy].transform.position;
+	}
 }
