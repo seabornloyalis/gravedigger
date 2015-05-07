@@ -8,12 +8,13 @@ public class DeathScreen : MonoBehaviour {
 
 	string[] names = new string[5];
 	int[] scores = new int[5];
-	GameObject[] listings = new GameObject[5];
+	//GameObject[] listings = new GameObject[5];
 	int newScorePos;
 	int yourScore;
 
 	// Use this for initialization
 	void Start () {
+		GameObject.Find ("Quote").GetComponent<Text>().text = QuoteManager.instance.randDeathQuote ();
 		yourScore = GameManager.instance.playerScore + GameManager.instance.playerlvlScore;
 		GameObject showScore = GameObject.Find ("yourScoreText");
 		showScore.GetComponent<Text>().text = "Your Score was: " + System.Convert.ToString (yourScore);

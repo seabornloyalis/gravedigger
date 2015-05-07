@@ -176,16 +176,6 @@ public class Player : MovingObject {
 			//anim.SetTrigger("StartWalk");
 		}
 		checkingMove = false;
-/*
-			if ((horizontal == xDir && xDir != 0) || (vertical == yDir && yDir != 0)) {
-				base.AttemptMove<Player> (xDir, yDir);
-				count--;
-				countText.text = "Turns Left: " + count;
-				CheckIfGameOver ();
-				GameManager.instance.playersTurn = false;
-			}
-			checkingMove = false;
-*/
 	}
 
 	protected override void OnCantMove<T> (T component)
@@ -201,7 +191,6 @@ public class Player : MovingObject {
 
 	private void Restart()
 	{
-		//Debug.Log ("Loadedlevel was: " + Application.loadedLevel + "\n");
 		Application.LoadLevel (Application.loadedLevel);
 	}
 

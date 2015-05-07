@@ -38,7 +38,6 @@ public class ScoreManager : MonoBehaviour {
 
 	private void readFromFile () {
 		string path = Application.persistentDataPath;
-		Debug.Log (path);
 		string scoreBrd = "";
 		if (File.Exists (path + "\\scores.txt")) {
 			scoreBrd = System.IO.File.ReadAllText (path + "\\scores.txt");

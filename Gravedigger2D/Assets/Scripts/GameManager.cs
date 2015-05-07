@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour {
 		scoreBreakText = GameObject.Find ("ScoreBreakText").GetComponent<Text> ();
 		zombieCountText = GameObject.Find ("ZombieCountText").GetComponent<Text>();
 		moveBreakText = GameObject.Find ("MoveBreakText").GetComponent<Text>();
+		GameObject.Find ("Quote").GetComponent<Text> ().text = QuoteManager.instance.randLevelQuote ();
 		levelText.text = "" + level;
 		zombieCountText.text = "" + zombieKills;
 		moveBreakText.text = "" + moveCount;
