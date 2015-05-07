@@ -233,6 +233,7 @@ public class GameManager : MonoBehaviour {
 		int rand = Random.Range(0, effects.Count);
 		GameObject.Find ("AttackFX").GetComponent<SpriteRenderer> ().sprite = effects[rand];
 		GameObject.Find ("AttackFX").GetComponent<Transform> ().position = enemies[currEnemy].transform.position;
+		GameObject.Find ("AttackFX").GetComponent<SpriteRenderer> ().enabled = true;
 	}
 
 	public int getLevel() {

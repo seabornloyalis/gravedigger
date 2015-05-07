@@ -55,6 +55,6 @@ public class QuoteManager : MonoBehaviour {
 
 	public string randDeathQuote () {
 		int rand = Random.Range (0, deathQuotes.Length);
-		return ingameQuotes [rand];
+		return deathQuotes [rand];
 	}
 }
