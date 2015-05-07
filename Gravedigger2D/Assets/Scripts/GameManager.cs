@@ -110,8 +110,9 @@ public class GameManager : MonoBehaviour {
 	{
 		scoreBreakText.text = "Your score was " + playerScore;
 		levelImage.SetActive (true);
-
+		audioPlayer.Stop ();
 		enabled = false;
+
 		Application.LoadLevel ("DeathScreen");
 	}
 
