@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
 	public bool showingLevel = false;
 	public List<Sprite> effects;
 	public QuoteManager QM;
+	public Sprite KeyboardIMG;
+	public Sprite XBoxIMG;
 
 	[HideInInspector] public bool playersTurn = true;
 
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour {
 	private bool doingSetup;
 	private int currSongIndex = 0;
 	private int currEnemy = 0;
+
 
 	void Awake()
 	{
@@ -79,7 +82,7 @@ public class GameManager : MonoBehaviour {
 		doingSetup = true;
 		levelImage = GameObject.Find ("LevelImage");
 		tutImage = GameObject.Find ("TutorialImage");
-		tutText = GameObject.Find ("TutText").GetComponent<Text> ();
+		//tutText = GameObject.Find ("TutText").GetComponent<Text> ();
 		levelText = GameObject.Find ("LevelText").GetComponent<Text> ();
 		scoreBreakText = GameObject.Find ("ScoreBreakText").GetComponent<Text> ();
 		zombieCountText = GameObject.Find ("ZombieCountText").GetComponent<Text> ();
@@ -131,15 +134,13 @@ public class GameManager : MonoBehaviour {
 	// to be removed on control finalization
 	public void TutKeyboardHelper()
 	{
-		tutText.text = "Controls:\nArrow Keys to Rotate\nWASD to move\nSpace bar to attack\nH to dig a hole\nB to pick up a body\nB to place body in a hole";
+		//tutText.text = "Controls:\nArrow Keys to Rotate\nWASD to move\nSpace bar to attack\nH to dig a hole\nB to pick up a body\nB to place body in a hole";
+		GameObject.Find ("TutorialImage").GetComponent<Image> ().sprite = KeyboardIMG;
 	}
 	public void TutXboxHelper()
 	{
-		tutText.text = "Controls:\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
-	}
-	public void TutPlayStationHelper()
-	{
-		tutText.text = "Controls:\nRotate with the Analog Stick\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
+		//tutText.text = "Controls:\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
+		GameObject.Find ("TutorialImage").GetComponent<Image> ().sprite = XBoxIMG;
 	}
 
 	void Update()

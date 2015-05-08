@@ -78,11 +78,6 @@ public class Player : MovingObject {
 		GameManager.instance.TutXboxHelper ();
 	}
 
-	public void TutPlayStation()
-	{
-		GameManager.instance.TutPlayStationHelper ();
-	}
-
 	private void OnDisable()
 	{
 		GameManager.instance.playerHealth = health;
