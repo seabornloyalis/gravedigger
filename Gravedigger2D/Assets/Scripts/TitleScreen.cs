@@ -7,6 +7,7 @@ public class TitleScreen : MonoBehaviour {
 	private Text tutText; // to be removed when controls finalized
 
 	void Start () {
+		clearCredits ();
 		tutImage = GameObject.Find ("TutorialImage");
 		tutText = GameObject.Find ("TutText").GetComponent<Text> ();
 		tutImage.SetActive (false);
@@ -41,4 +42,28 @@ public class TitleScreen : MonoBehaviour {
 	{
 		tutText.text = "Controls:\nRotate with the Analog Stick\nLeft Joystick to move\nX to pickup a body\nA to dig a hole\nB to attack";
 	}
+
+	public void rollCredits() {
+		GameObject.Find ("CreditScreen").GetComponent<Image> ().enabled = true;
+		GameObject.Find ("CreditScreen/Crew").GetComponent<Text> ().enabled = true;
+		Invoke ("clearCredits", 5f);
+	}
+
+	void clearCredits() {
+		GameObject.Find ("CreditScreen").GetComponent<Image> ().enabled = false;
+		GameObject.Find ("CreditScreen/Crew").GetComponent<Text> ().enabled = false;
+	}
+
+	/*protected IEnumerator SmoothMovement(Vector3 end)
+	{
+		float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
+		
+		while (sqrRemainingDistance > float.Epsilon) 
+		{
+			Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, 5*Time.deltaTime);
+			rb2D.MovePosition(newPosition);
+			sqrRemainingDistance = (transform.position - end).sqrMagnitude;
+			yield return null;
+		}
+	}*/
 }
