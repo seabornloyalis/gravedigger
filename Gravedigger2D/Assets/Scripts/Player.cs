@@ -23,6 +23,7 @@ public class Player : MovingObject {
 	public int lvlScore;
 	public int count = 150;
 	public List<GameObject> hole;
+	public List<Sprite>heldBodies;
 	public GameObject gravemarker;
 
 	private string isCarrying;
@@ -147,14 +148,36 @@ public class Player : MovingObject {
 		anim.SetBool("LeftFace", false);
 		anim.SetBool("DownFace", false);
 		anim.SetBool("RightFace", false);
+		Vector3 initPos = new Vector3 (0f, -4f, 0f);
+		GameObject.Find ("Player/Body").GetComponent<Transform> ().localPosition = initPos;
+		GameObject.Find("Player/Body").GetComponent<SpriteRenderer>().sortingOrder = 3;
+		GameObject.Find ("Player/Body").GetComponent<SpriteRenderer> ().enabled = true;
 		if (lookDir.y == 1.0f) {
+			if (isCarrying.Contains("Body")) {
+				GameObject.Find("Player/Body").GetComponent<SpriteRenderer>().sprite = heldBodies[3];
+				GameObject.Find("Player/Body").GetComponent<SpriteRenderer>().sortingOrder = -1;
+				GameObject.Find ("Player/Body").GetComponent<Transform> ().localPosition = initPos + new Vector3(3f,0f,0f);
+			}
 			anim.SetBool("UpFace", true);
 		} else if (lookDir.x == -1.0f) {
+			if (isCarrying.Contains("Body")) {
+				GameObject.Find("Player/Body").GetComponent<SpriteRenderer>().sprite = heldBodies[0];
+				GameObject.Find("Player/Body").GetComponent<SpriteRenderer>().sortingOrder = -1;
+			}
 			anim.SetBool("LeftFace", true);
 		} else if (lookDir.y == -1.0f) {
+			if (isCarrying.Contains("Body")) {
+				GameObject.Find("Player/Body").GetComponent<SpriteRenderer>().sprite = heldBodies[2];
+				GameObject.Find ("Player/Body").GetComponent<Transform> ().localPosition = initPos + new Vector3(-3f,0f,0f);
+			}
 			anim.SetBool("DownFace", true);
 		} else if (lookDir.x == 1 && rightSide != null) {
+			if (isCarrying.Contains("Body"))
+				GameObject.Find("Player/Body").GetComponent<SpriteRenderer>().sprite = heldBodies[1];
 			anim.SetBool("RightFace", true);
+		}
+		if (!isCarrying.Contains ("Body")) {
+			GameObject.Find ("Player/Body").GetComponent<SpriteRenderer> ().sprite = null;
 		}
 		base.RotateFacing (newFacing);
 	}
@@ -288,15 +311,16 @@ public class Player : MovingObject {
 			audioSrc.clip = grunt;
 			audioSrc.Play();
 			isCarrying = "Body" + hit.transform.gameObject.GetComponent<Body>().bodyTypeID;
-			carryText.text = "You have a body";
+			//carryText.text = "You have a body";
 			GameManager.instance.zombieKills += 1;
 			hit.transform.gameObject.SetActive (false);
 			acted = true;
 			count--;
 			countText.text = "Turns Left: " + count;
+			RotateFacing(lookDir);
 			CheckIfGameOver ();
 		} else if (hit.transform.tag == "Hole" && isCarrying.Contains("Body") && (Input.GetAxisRaw ("Pick/put") != 0.0f)) {
-			carryText.text = "";
+			//carryText.text = "";
 			digScore += (6 - int.Parse(isCarrying[4].ToString())) * 10;
 			scoreText.text = "Score: " + (digScore + lvlScore);
 			count--;
@@ -306,6 +330,7 @@ public class Player : MovingObject {
 			hit.transform.gameObject.SetActive (false);
 			Instantiate (gravemarker, new Vector3 (end.x, end.y, 0f), Quaternion.identity);
 			isCarrying = "None";
+			GameObject.Find ("Player/Body").GetComponent<SpriteRenderer> ().sprite = null;
 			acted = true;
 		}
 		if (acted) {
